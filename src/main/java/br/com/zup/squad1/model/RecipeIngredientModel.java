@@ -1,4 +1,4 @@
-package model;
+package br.com.zup.squad1.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,12 +17,10 @@ public class RecipeIngredientModel {
 
     @ManyToOne
     @JoinColumn(name = "id_recipe")
-    @Column(nullable = false)
-    private Recipe recipe;
+    private RecipeModel recipe;
 
     @ManyToOne
     @JoinColumn(name = "id_ingredient")
-    @Column(nullable = false)
     private Ingredient ingredient;
 
     @Column(nullable = false)

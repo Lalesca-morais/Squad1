@@ -1,13 +1,16 @@
-package service;
+package br.com.zup.squad1.service;
 
 import jakarta.transaction.Transactional;
-import model.RecipeIngredientModel;
+import br.com.zup.squad1.model.RecipeIngredientModel;
+import br.com.zup.squad1.model.RecipeModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import repository.RecipeIngredientRepository;
+import br.com.zup.squad1.repository.RecipeIngredientRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class RecipeIngredientService {
 
     @Autowired
@@ -32,7 +35,7 @@ public class RecipeIngredientService {
     }
 
     @Transactional
-    public List<Recipe> findRecipesByIngredientId(Long ingredientId) {
+    public List<RecipeModel> findRecipesByIngredientId(Long ingredientId) {
         return repository.findRecipesByIngredientId(ingredientId);
     }
 }

@@ -1,19 +1,20 @@
-package controller;
+package br.com.zup.squad1.controller;
 
-import dto.RecipeIngredientDto;
-import model.RecipeIngredientModel;
+import br.com.zup.squad1.dto.RecipeIngredientDto;
+import jakarta.validation.Valid;
+import br.com.zup.squad1.model.RecipeIngredientModel;
+import br.com.zup.squad1.model.RecipeModel;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import service.RecipeIngredientService;
+import br.com.zup.squad1.service.RecipeIngredientService;
 
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("/recipe-ingredients")
 public class RecipeIngredientController {
     @Autowired
@@ -54,7 +55,7 @@ public class RecipeIngredientController {
     }
 
     public ResponseEntity<Object> getRecipesByIngredientId(@PathVariable(value = "id") Long ingredientId) {
-        List<Recipe> recipes = service.findRecipesByIngredientId(ingredientId);
+        List<RecipeModel> recipes = service.findRecipesByIngredientId(ingredientId);
         if (recipes.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não há receitas cadastradas com esse ingrediente.");
         }
