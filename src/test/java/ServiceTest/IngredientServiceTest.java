@@ -30,7 +30,7 @@ public class IngredientServiceTest {
 
     @Test
     public void mustRegisterCustomerSuccessfully() {
-        Ingredient ingredient = new Ingredient(1L, "cenoura", new Date(2023, 10, 19), 4);
+        Ingredient ingredient = new Ingredient(1L, "cenoura");
 
         when(ingredientRepository.save(ArgumentMatchers.any(Ingredient.class))).thenReturn(ingredient);
 
