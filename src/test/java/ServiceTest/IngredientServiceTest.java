@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.*;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +30,7 @@ public class IngredientServiceTest {
 
     @Test
     public void mustRegisterCustomerSuccessfully() {
-        Ingredient ingredient = new Ingredient(1L, "cenoura");
+        Ingredient ingredient = new Ingredient(1L, "cenoura", new Date(2023, 10, 19), 4);
 
         when(ingredientRepository.save(ArgumentMatchers.any(Ingredient.class))).thenReturn(ingredient);
 

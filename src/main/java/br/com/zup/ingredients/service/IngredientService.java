@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import br.com.zup.ingredients.repository.IngredientRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class IngredientService {
@@ -30,13 +31,14 @@ public class IngredientService {
     }
 
     public Ingredient updateIngredient(Long id, Ingredient ingredient) throws IngredientNotFound {
-        Ingredient existingIngredient = ingredientRepository.findById(id).orElse(ingredient);
+        Optional<Ingredient> existingIngredient = ingredientRepository.findById(id);
 
-        if (existingIngredient != null) {
-            existingIngredient.setName(ingredient.getName());
-            existingIngredient.setValidity(ingredient.getValidity());
-            existingIngredient.setAmount(ingredient.getAmount());
-            return ingredientRepository.save(existingIngredient);
+        if (existingIngredient.isPresent()) {
+            Ingredient updatedIngredient = existingIngredient.get();
+            updatedIngredient.setName(ingredient.getName());
+            updatedIngredient.setValidity(ingredient.getValidity());
+            updatedIngredient.setAmount(ingredient.getAmount());
+            return ingredientRepository.save(updatedIngredient);
         } else {
             throw new IngredientNotFound("Ingrediente não encontrado pelo ID: " + id);
         }

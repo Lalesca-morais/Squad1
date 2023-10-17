@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -24,12 +25,16 @@ public class Ingredient {
     private String name;
 
     @Column(name = "validity")
-    private Date validity;
+    private LocalDate validity;
 
     @Column(name = "weight")
     private double amount;
 
-    @ManyToMany(mappedBy = "ingredientes")
-    private Set<Recipe> receitas = new HashSet<>();
+    public Ingredient(Long id, String name) {
+
+    }
+
+//    @ManyToMany(mappedBy = "ingredientes")
+//    private Set<Recipe> receitas = new HashSet<>();
 
 }
