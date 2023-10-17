@@ -29,7 +29,6 @@ public class Ingredient {
     @Column(name = "weight")
     private double amount;
 
-
     @ManyToMany(mappedBy = "ingredientes")
     private Set<Recipe> receitas = new HashSet<>();
 
