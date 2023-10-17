@@ -2,6 +2,8 @@ package org.example.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.dto.ConverterRequestDTO;
+import org.example.dto.ConverterResponseDTO;
 import org.example.model.ConverterRequestModel;
 import org.example.model.ConverterResponseModel;
 import org.example.service.ConverterService;
@@ -17,9 +19,9 @@ public class ConverterController {
 
     private final ConverterService converterService;
     @PostMapping
-    public ResponseEntity<ConverterResponseModel> converter(@RequestBody @Valid ConverterRequestModel request) {
+    public ResponseEntity<ConverterResponseDTO> converter(@RequestBody @Valid ConverterRequestDTO request) {
         String value_converted = converterService.converterMeasure(request.getValue_to_be_converted(), request.getMeasure(), request.getType_to_be_converted());
-        ConverterResponseModel response = new ConverterResponseModel();
+        ConverterResponseDTO response = new ConverterResponseDTO();
         response.setConverted_value(value_converted);
         return ResponseEntity.ok(response);
     }
