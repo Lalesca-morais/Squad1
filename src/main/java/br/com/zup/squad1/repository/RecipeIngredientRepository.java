@@ -11,6 +11,6 @@ import java.util.List;
 
 @Repository
 public interface RecipeIngredientRepository extends JpaRepository<RecipeIngredientModel, Long> {
-    @Query("SELECT DISTINCT r FROM RecipeModel r JOIN r.ingredients ri WHERE ri.id = :ingredientId")
-    List<RecipeModel> findRecipesByIngredientId(@Param("ingredientId") Long ingredientId);
+    @Query("SELECT r FROM RecipeModel r JOIN RecipeIngredientModel ri ON r.id = ri.id_recipe WHERE ri.id_ingredient = :id")
+    List<RecipeModel> findRecipesByIngredientId(@Param("id") Long id_ingredient);
 }

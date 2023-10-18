@@ -15,13 +15,11 @@ public class RecipeIngredientModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_recipe")
-    private RecipeModel recipe;
+    @Column(nullable = false)
+    private Long id_recipe;
 
-    @ManyToOne
-    @JoinColumn(name = "id_ingredient")
-    private Ingredient ingredient;
+    @Column(nullable = false)
+    private Long id_ingredient;
 
     @Column(nullable = false)
     private String ingredientQuantity;

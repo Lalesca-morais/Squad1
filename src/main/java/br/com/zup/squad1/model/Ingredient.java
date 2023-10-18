@@ -31,6 +31,5 @@ public class Ingredient {
     private double amount;
 
     @ManyToMany(mappedBy = "ingredients")
-    @JoinColumn(name = "id_recipe")
     private Set<RecipeModel> recipes = new HashSet<>();
 }
