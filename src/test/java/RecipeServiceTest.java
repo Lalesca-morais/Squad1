@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RecipeServiceTest {
     @InjectMocks
     private RecipeService recipeService;
-
     @Mock
     private RecipeRepository recipeRepository;
 

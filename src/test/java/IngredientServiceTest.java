@@ -99,5 +99,4 @@ public class IngredientServiceTest {
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> ingredientService.updateIngredient(ingredientId, updatedIngredient));
         assertEquals("Ingrediente não encontrado", exception.getMessage());
-    }
-}
+    }}

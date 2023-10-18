@@ -18,7 +18,6 @@ public class RecipeControllerTest {
     private RecipeController recipeController;
     @Mock
     private RecipeService recipeService;
-
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
