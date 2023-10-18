@@ -27,7 +27,7 @@ public class Ingredient {
     @Column(name = "validity")
     private LocalDate validity;
 
-    @Column(name = "weight")
+    @Column(name = "amount")
     private double amount;
 
     public Ingredient(Long id, String name) {
