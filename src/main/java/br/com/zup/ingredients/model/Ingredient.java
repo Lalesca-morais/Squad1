@@ -35,6 +35,6 @@ public class Ingredient {
     }
 
     @ManyToMany(mappedBy = "ingredients")
-    private Set<Recipe> revenues = new HashSet<>();
+    private Set<RecipeModel> recips = new HashSet<>();
 
 }
