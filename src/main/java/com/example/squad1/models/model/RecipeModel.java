@@ -24,6 +24,7 @@ public class RecipeModel {
             inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
     private Set<IngredientModel> ingredients;
 
+    @Column(length = 600)
     private String preparation;
 
     private String difficulty;
