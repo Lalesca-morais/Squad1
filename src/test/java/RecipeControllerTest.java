@@ -35,7 +35,6 @@ public class RecipeControllerTest {
         BeanUtils.copyProperties(recipeDTO, recipeModel);
 
         Mockito.when(recipeService.registerRecipe(recipeModel)).thenReturn(recipeModel);
-
         ResponseEntity<RecipeModel> response = recipeController.registerRecipe(recipeDTO);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
