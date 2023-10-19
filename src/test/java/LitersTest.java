@@ -1,4 +1,4 @@
-import org.example.service.converter.Liters;
+import br.com.zup.squad1.service.converter.Liters;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

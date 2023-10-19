@@ -1,15 +1,14 @@
 package ServiceTest;
 
-import br.com.zup.ingredients.exceptions.IngredientNotFound;
-import br.com.zup.ingredients.model.Ingredient;
-import br.com.zup.ingredients.repository.IngredientRepository;
-import br.com.zup.ingredients.service.IngredientService;
+import br.com.zup.squad1.exceptions.IngredientNotFound;
+import br.com.zup.squad1.model.Ingredient;
+import br.com.zup.squad1.repository.IngredientRepository;
+import br.com.zup.squad1.service.IngredientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
