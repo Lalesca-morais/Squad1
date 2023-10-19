@@ -1,0 +1,14 @@
+com\example\squad1\dto\DTO\RecipeDTO$RecipeDTOBuilder.class
+com\example\squad1\models\model\IngredientModel.class
+com\example\squad1\controllers\controller\RecipeController.class
+com\example\squad1\dto\DTO\PreparationDTO.class
+com\example\squad1\dto\DTO\DifficultyDTO$DifficultyDTOBuilder.class
+com\example\squad1\dto\DTO\PreparationDTO$PreparationDTOBuilder.class
+com\example\squad1\models\model\RecipeModel.class
+com\example\squad1\dto\DTO\DifficultyDTO.class
+com\example\squad1\repositories\repository\RecipeRepository.class
+com\example\squad1\models\model\DifficultyModel.class
+com\example\squad1\models\model\PreparationModel.class
+com\example\squad1\services\service\RecipeService.class
+com\example\squad1\dto\DTO\RecipeDTO.class
+com\example\squad1\MainApplication.class
