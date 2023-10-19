@@ -1,6 +1,6 @@
-import com.example.squad1.models.model.RecipeModel;
-import com.example.squad1.repositories.repository.RecipeRepository;
-import com.example.squad1.services.service.RecipeService;
+import br.com.zup.squad1.model.RecipeModel;
+import br.com.zup.squad1.repository.RecipeRepository;
+import br.com.zup.squad1.service.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

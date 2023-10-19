@@ -1,4 +1,4 @@
-import org.example.service.converter.SoupSpoon;
+import br.com.zup.squad1.service.converter.SoupSpoon;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

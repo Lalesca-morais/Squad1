@@ -1,7 +1,7 @@
-import com.example.squad1.controllers.controller.RecipeController;
-import com.example.squad1.dto.DTO.RecipeDTO;
-import com.example.squad1.models.model.RecipeModel;
-import com.example.squad1.services.service.RecipeService;
+import br.com.zup.squad1.controller.RecipeController;
+import br.com.zup.squad1.dto.RecipeDTO;
+import br.com.zup.squad1.model.RecipeModel;
+import br.com.zup.squad1.service.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

@@ -1,7 +1,9 @@
-import org.example.controller.ConverterController;
-import org.example.model.ConverterRequestModel;
-import org.example.model.ConverterResponseModel;
-import org.example.service.ConverterService;
+import br.com.zup.squad1.controller.ConverterController;
+import br.com.zup.squad1.dto.ConverterRequestDTO;
+import br.com.zup.squad1.dto.ConverterResponseDTO;
+import br.com.zup.squad1.model.ConverterRequestModel;
+import br.com.zup.squad1.model.ConverterResponseModel;
+import br.com.zup.squad1.service.ConverterService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,16 +26,16 @@ public class ConverterControllerTest {
     @Test
     @DisplayName("Teste se o metodo 'converter' retorna status 200(Ok)")
     void converter_t1(){
-        ConverterRequestModel requestModel = new ConverterRequestModel();
-        requestModel.setValue_to_be_converted(34.5);
-        requestModel.setMeasure(1);
-        requestModel.setType_to_be_converted(2);
+        ConverterRequestDTO requestDTO = new ConverterRequestDTO();
+        requestDTO.setValue_to_be_converted(34.5);
+        requestDTO.setMeasure(1);
+        requestDTO.setType_to_be_converted(2);
 
-        when(converterService.converterMeasure(requestModel.getValue_to_be_converted(),
-                requestModel.getMeasure(),requestModel.getType_to_be_converted()))
+        when(converterService.converterMeasure(requestDTO.getValue_to_be_converted(),
+                requestDTO.getMeasure(),requestDTO.getType_to_be_converted()))
                 .thenReturn("20.0");
 
-        ResponseEntity<ConverterResponseModel> response = converterController.converter(requestModel);
+        ResponseEntity<ConverterResponseDTO> response = converterController.converter(requestDTO);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }

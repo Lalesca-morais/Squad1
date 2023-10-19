@@ -1,4 +1,4 @@
-import org.example.service.converter.Gram;
+import br.com.zup.squad1.service.converter.Gram;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
