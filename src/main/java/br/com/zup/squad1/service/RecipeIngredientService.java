@@ -38,4 +38,9 @@ public class RecipeIngredientService {
     public List<RecipeModel> findRecipesByIngredientId(Long ingredientId) {
         return repository.findRecipesByIngredientId(ingredientId);
     }
+
+    @Transactional
+    public List<RecipeIngredientModel> findRecipeIngredientsByRecipeId(Long id_recipe) {
+        return repository.findRecipeIngredientsByRecipeId(id_recipe);
+    }
 }

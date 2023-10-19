@@ -2,7 +2,6 @@ package br.com.zup.squad1.controller;
 
 import br.com.zup.squad1.dto.RecipeDTO;
 import br.com.zup.squad1.dto.RecipeIngredientDto;
-import br.com.zup.squad1.exeption.IngredientNotFound;
 import jakarta.validation.Valid;
 import br.com.zup.squad1.model.RecipeIngredientModel;
 import br.com.zup.squad1.model.RecipeModel;
@@ -13,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import br.com.zup.squad1.service.RecipeIngredientService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,11 +31,6 @@ public class RecipeIngredientController {
         recipeIngredient.setIngredientQuantity(recipeIngredientDto.getIngredientQuantity());
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(recipeIngredient));
     }
-
-//    @GetMapping
-//    public ResponseEntity<List<RecipeIngredientModel>> getAllRecipeIngredients(){
-//        return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
-//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable(value = "id") Long id){
@@ -62,6 +57,7 @@ public class RecipeIngredientController {
     @GetMapping("/{id}")
     public ResponseEntity<List<RecipeDTO>> getRecipesByIngredientId(@PathVariable(value = "id") Long id_ingredient) {
         List<RecipeModel> recipes = service.findRecipesByIngredientId(id_ingredient);
+
         if (recipes.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -72,9 +68,21 @@ public class RecipeIngredientController {
                     dto.setName(recipe.getName());
                     dto.setPreparation(recipe.getPreparation());
                     dto.setDifficulty(recipe.getDifficulty());
+
+                    List<RecipeIngredientModel> ingredientModels = service.findRecipeIngredientsByRecipeId(recipe.getId());
+                    List<RecipeIngredientDto> ingredientDtos = new ArrayList<>();
+                    for (RecipeIngredientModel ingredient: ingredientModels) {
+                        RecipeIngredientDto recipeIngredientDto = new RecipeIngredientDto();
+                        recipeIngredientDto.setIdRecipe(recipe.getId());
+                        recipeIngredientDto.setIdIngredient(ingredient.getId_ingredient());
+                        recipeIngredientDto.setIngredientQuantity(ingredient.getIngredientQuantity());
+                        ingredientDtos.add(recipeIngredientDto);
+                    }
+
+                    dto.setIngredients(ingredientDtos);
                     return dto;
                 })
                 .collect(Collectors.toList());
-        return ResponseEntity.status(HttpStatus.OK).body( recipeDTOs);
+        return ResponseEntity.status(HttpStatus.OK).body(recipeDTOs);
     }
 }

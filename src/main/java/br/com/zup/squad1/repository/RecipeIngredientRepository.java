@@ -13,4 +13,7 @@ import java.util.List;
 public interface RecipeIngredientRepository extends JpaRepository<RecipeIngredientModel, Long> {
     @Query("SELECT r FROM RecipeModel r JOIN RecipeIngredientModel ri ON r.id = ri.id_recipe WHERE ri.id_ingredient = :id")
     List<RecipeModel> findRecipesByIngredientId(@Param("id") Long id_ingredient);
+
+    @Query("SELECT ri FROM RecipeIngredientModel ri WHERE ri.id_recipe = :id")
+    List<RecipeIngredientModel> findRecipeIngredientsByRecipeId(@Param("id") Long id_recipe);
 }
