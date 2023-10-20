@@ -1,5 +1,7 @@
 package br.com.zup.squad1.model;
 
+import br.com.zup.squad1.model.enums.ProductType;
+import br.com.zup.squad1.model.enums.State;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,6 +31,14 @@ public class Ingredient {
 
     @Column(name = "amount")
     private double amount;
+
+    @Column(name = "productType")
+    @Enumerated(EnumType.STRING)
+    private ProductType productType;
+
+    @Column(name = "state")
+    @Enumerated(EnumType.STRING)
+    private State state;
 
     public Ingredient(Long id, String name) {
 

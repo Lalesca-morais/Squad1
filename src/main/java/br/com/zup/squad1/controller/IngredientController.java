@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import br.com.zup.squad1.service.IngredientService;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,16 @@ public class IngredientController {
         ingredient.setName(ingredientDTO.getName());
         ingredient.setValidity(ingredientDTO.getValidity());
         ingredient.setAmount(ingredientDTO.getAmount());
+        ingredient.setState(ingredientDTO.getState());
+        ingredient.setProductType(ingredientDTO.getProductType());
+
+        if (ingredientDTO.getValidity() == null) {
+            LocalDate dueDate = ingredientService.calculateDueDate(ingredient);
+            ingredient.setValidity(dueDate);
+        } else {
+            ingredient.setValidity(ingredientDTO.getValidity());
+        }
+
         Ingredient saveIngredient = ingredientService.addIngredient(ingredient);
         return new ResponseEntity<>(saveIngredient, HttpStatus.CREATED);
     }
@@ -43,6 +54,8 @@ public class IngredientController {
             ingredientDTO.setName(ingredient.getName());
             ingredientDTO.setValidity(ingredient.getValidity());
             ingredientDTO.setAmount(ingredient.getAmount());
+            ingredientDTO.setProductType(ingredient.getProductType());
+            ingredientDTO.setState(ingredient.getState());
             ingredientDTOs.add(ingredientDTO);
         }
         return ingredientDTOs;
@@ -57,6 +70,8 @@ public class IngredientController {
         ingredientDTO.setName(ingredient.getName());
         ingredientDTO.setValidity(ingredient.getValidity());
         ingredientDTO.setAmount(ingredient.getAmount());
+        ingredientDTO.setProductType(ingredient.getProductType());
+        ingredientDTO.setState(ingredient.getState());
 
         return ingredientDTO;
     }
@@ -69,6 +84,8 @@ public class IngredientController {
         ingredient.setName(ingredientDTO.getName());
         ingredient.setValidity(ingredientDTO.getValidity());
         ingredient.setAmount(ingredientDTO.getAmount());
+        ingredient.setState(ingredientDTO.getState());
+        ingredient.setProductType(ingredientDTO.getProductType());
 
         Ingredient updatedIngredient = ingredientService.updateIngredient(id, ingredient);
 
@@ -77,6 +94,8 @@ public class IngredientController {
         updatedIngredientDTO.setName(updatedIngredient.getName());
         updatedIngredientDTO.setValidity(updatedIngredient.getValidity());
         updatedIngredientDTO.setAmount(updatedIngredient.getAmount());
+        updatedIngredientDTO.setProductType(ingredient.getProductType());
+        updatedIngredientDTO.setState(ingredient.getState());
 
         return updatedIngredientDTO;
     }
@@ -84,6 +103,6 @@ public class IngredientController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteIngredient(@PathVariable Long id) {
         ingredientService.deleteIngredient(id);
-        return  ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().build();
     }
 }
