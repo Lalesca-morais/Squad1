@@ -15,5 +15,4 @@ public class IngredientDTO {
     private String name;
     private LocalDate validity;
     private double amount;
-
 }

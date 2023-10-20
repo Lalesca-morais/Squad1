@@ -20,8 +20,8 @@ public class RecipeModel {
 
     @ManyToMany
     @JoinTable(name = "RecipeIngredient",
-            joinColumns = @JoinColumn(name = "recipe_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+            joinColumns = @JoinColumn(name = "id_recipe"),
+            inverseJoinColumns = @JoinColumn(name = "id_ingredient"))
     private Set<Ingredient> ingredients;
 
     @Column(length = 600)
