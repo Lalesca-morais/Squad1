@@ -1,4 +1,5 @@
-import br.com.zup.squad1.service.converter.SoupSpoon;
+package br.com.zup.squad1.service.converter;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -6,38 +7,38 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class SoupSpoonTest {
-    private SoupSpoon soupSpoon;
+public class CupTest {
+    private Cup cup;
 
     @BeforeEach
     void setUp(){
-        soupSpoon = new SoupSpoon();
+        cup = new Cup();
     }
 
     @Test
     @DisplayName("Testa se o 'converter' para grama retorna true")
     void t1(){
-        String result = soupSpoon.converter(10,1);
-        assertEquals("150 grama(s)",result);
+        String result = cup.converter(10,1);
+        assertEquals("2400 grama(s)",result);
     }
 
     @Test
     @DisplayName("Testa se o 'converter' para litro retorna true")
     void t2(){
-        String result = soupSpoon.converter(10,2);
-        assertEquals("0 litro(s)",result);
+        String result = cup.converter(10,2);
+        assertEquals("2 litro(s)",result);
     }
 
     @Test
-    @DisplayName("Testa se o 'converter' para xícara retorna true")
+    @DisplayName("Testa se o 'converter' para colher de sopa retorna true")
     void t3(){
-        String result = soupSpoon.converter(10,3);
-        assertEquals("1 xícara(s)",result);
+        String result = cup.converter(10,3);
+        assertEquals("160 colher de sopa(s)",result);
     }
 
     @Test
     @DisplayName("Testa se o 'converter' lança execeção")
     void t4() throws IllegalArgumentException{
-        assertThrows(IllegalArgumentException.class, () -> soupSpoon.converter(10,5));
+        assertThrows(IllegalArgumentException.class, () -> cup.converter(10,5));
     }
 }

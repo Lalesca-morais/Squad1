@@ -1,8 +1,7 @@
-import br.com.zup.squad1.controller.ConverterController;
+package br.com.zup.squad1.controller;
+
 import br.com.zup.squad1.dto.ConverterRequestDTO;
 import br.com.zup.squad1.dto.ConverterResponseDTO;
-import br.com.zup.squad1.model.ConverterRequestModel;
-import br.com.zup.squad1.model.ConverterResponseModel;
 import br.com.zup.squad1.service.ConverterService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RecipeDTO {
-    private String id;
+    private Long id;
     private String name;
     private String preparation;
     private String difficulty;
