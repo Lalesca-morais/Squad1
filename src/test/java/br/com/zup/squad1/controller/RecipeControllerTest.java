@@ -1,4 +1,5 @@
-import br.com.zup.squad1.controller.RecipeController;
+package br.com.zup.squad1.controller;
+
 import br.com.zup.squad1.dto.RecipeDTO;
 import br.com.zup.squad1.model.RecipeModel;
 import br.com.zup.squad1.service.RecipeService;

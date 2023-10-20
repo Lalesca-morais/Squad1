@@ -1,9 +1,8 @@
-package ServiceTest;
+package br.com.zup.squad1.service;
 
 import br.com.zup.squad1.exceptions.IngredientNotFound;
 import br.com.zup.squad1.model.Ingredient;
 import br.com.zup.squad1.repository.IngredientRepository;
-import br.com.zup.squad1.service.IngredientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
