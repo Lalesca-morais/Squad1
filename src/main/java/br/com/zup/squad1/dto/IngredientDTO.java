@@ -1,6 +1,6 @@
 package br.com.zup.squad1.dto;
 
-import br.com.zup.squad1.model.State;
+import br.com.zup.squad1.model.enums.State;
 import br.com.zup.squad1.model.enums.ProductType;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;

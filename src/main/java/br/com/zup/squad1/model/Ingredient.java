@@ -1,6 +1,7 @@
 package br.com.zup.squad1.model;
 
 import br.com.zup.squad1.model.enums.ProductType;
+import br.com.zup.squad1.model.enums.State;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

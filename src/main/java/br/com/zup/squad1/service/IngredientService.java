@@ -3,7 +3,7 @@ package br.com.zup.squad1.service;
 import br.com.zup.squad1.exceptions.IngredientNotFound;
 import br.com.zup.squad1.model.Ingredient;
 import br.com.zup.squad1.model.enums.ProductType;
-import br.com.zup.squad1.model.State;
+import br.com.zup.squad1.model.enums.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.zup.squad1.repository.IngredientRepository;
