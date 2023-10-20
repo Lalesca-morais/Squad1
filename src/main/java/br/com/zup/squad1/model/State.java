@@ -1,4 +1,4 @@
-package br.com.zup.squad1.model.enums;
+package br.com.zup.squad1.model;
 
 import lombok.Getter;
 
