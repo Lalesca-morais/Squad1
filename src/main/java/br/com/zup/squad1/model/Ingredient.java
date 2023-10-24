@@ -2,6 +2,7 @@ package br.com.zup.squad1.model;
 
 import br.com.zup.squad1.model.enums.ProductType;
 import br.com.zup.squad1.model.enums.State;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,7 +45,7 @@ public class Ingredient {
 
     }
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "ingredients")
     private Set<RecipeModel> recipes = new HashSet<>();
-
 }
