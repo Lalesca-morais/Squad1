@@ -3,6 +3,7 @@ package br.com.zup.squad1.controller;
 import br.com.zup.squad1.dto.IngredientDTO;
 import br.com.zup.squad1.exceptions.IngredientNotFound;
 import br.com.zup.squad1.model.Ingredient;
+import br.com.zup.squad1.service.NotificationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,11 +14,14 @@ import br.com.zup.squad1.service.IngredientService;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/ingredients")
 public class IngredientController {
     private final IngredientService ingredientService;
+    @Autowired
+    private NotificationService notificationService;
 
     @Autowired
     public IngredientController(IngredientService ingredientService) {
@@ -104,5 +108,10 @@ public class IngredientController {
     public ResponseEntity<Void> deleteIngredient(@PathVariable Long id) {
         ingredientService.deleteIngredient(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/about-to-expire")
+    public List<Map<String, Object>> getIngredientsAboutToExpire(){
+        return notificationService.notifyIngredientsNearExpiration();
     }
 }

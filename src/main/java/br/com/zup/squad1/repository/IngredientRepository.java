@@ -11,6 +11,10 @@ import java.util.List;
 
 @Repository
 public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
+
+    List<Ingredient> findByValidityBetween(LocalDate start, LocalDate end);
+
     @Query("SELECT i FROM Ingredient i WHERE i.validity < :validity")
     List<Ingredient> findByExpiredIngredients(@Param("validity")LocalDate date);
 }
+

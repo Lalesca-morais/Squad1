@@ -1,5 +1,6 @@
 package br.com.zup.squad1.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class RecipeModel {
     private Long id;
     private String name;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "RecipeIngredient",
             joinColumns = @JoinColumn(name = "id_recipe"),
