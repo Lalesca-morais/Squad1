@@ -1,3 +1,5 @@
+package ServiceTest;
+
 import br.com.zup.squad1.model.RecipeModel;
 import br.com.zup.squad1.repository.RecipeRepository;
 import br.com.zup.squad1.service.RecipeService;

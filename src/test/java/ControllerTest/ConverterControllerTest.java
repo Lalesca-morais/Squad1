@@ -1,3 +1,5 @@
+package ControllerTest;
+
 import br.com.zup.squad1.controller.ConverterController;
 import br.com.zup.squad1.dto.ConverterRequestDTO;
 import br.com.zup.squad1.dto.ConverterResponseDTO;

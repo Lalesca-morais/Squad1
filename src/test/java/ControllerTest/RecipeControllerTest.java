@@ -1,3 +1,5 @@
+package ControllerTest;
+
 import br.com.zup.squad1.controller.RecipeController;
 import br.com.zup.squad1.dto.RecipeDTO;
 import br.com.zup.squad1.model.RecipeModel;
