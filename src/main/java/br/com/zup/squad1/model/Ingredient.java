@@ -48,4 +48,6 @@ public class Ingredient {
     @JsonIgnore
     @ManyToMany(mappedBy = "ingredients")
     private Set<RecipeModel> recipes = new HashSet<>();
+    
 }
+
