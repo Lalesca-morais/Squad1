@@ -1,4 +1,4 @@
-package ControllerTest;
+package br.com.zup.squad1.controller;
 
 import br.com.zup.squad1.controller.ExpiredIngredientsController;
 import br.com.zup.squad1.dto.IngredientDTO;
