@@ -4,6 +4,7 @@ import br.com.zup.squad1.dto.IngredientDTO;
 import br.com.zup.squad1.exceptions.IngredientNotFound;
 import br.com.zup.squad1.model.Ingredient;
 import br.com.zup.squad1.service.NotificationService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/ingredients")
+@Tag(name = "Ingredients")
 public class IngredientController {
     private final IngredientService ingredientService;
     @Autowired

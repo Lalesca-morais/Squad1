@@ -2,6 +2,7 @@ package br.com.zup.squad1.controller;
 
 import br.com.zup.squad1.dto.RecipeDTO;
 import br.com.zup.squad1.dto.RecipeIngredientDto;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import br.com.zup.squad1.model.RecipeIngredientModel;
 import br.com.zup.squad1.model.RecipeModel;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/recipe-ingredients")
+@Tag(name = "Recipes and ingredients")
 public class RecipeIngredientController {
     @Autowired
     RecipeIngredientService service;

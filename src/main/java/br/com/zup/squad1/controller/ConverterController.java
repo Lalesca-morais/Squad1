@@ -1,5 +1,6 @@
 package br.com.zup.squad1.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import br.com.zup.squad1.dto.ConverterRequestDTO;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("converter")
 @RequiredArgsConstructor
+@Tag(name = "To convert")
 public class ConverterController {
 
     private final ConverterService converterService;

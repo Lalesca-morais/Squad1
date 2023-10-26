@@ -3,6 +3,7 @@ package br.com.zup.squad1.controller;
 import br.com.zup.squad1.dto.IngredientDTO;
 import br.com.zup.squad1.model.Ingredient;
 import br.com.zup.squad1.service.ExpiredIngredientsService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/expired-ingredients")
+@Tag(name = "Expired Ingredients")
 public class ExpiredIngredientsController {
     private final ExpiredIngredientsService expiredIngredientsService;
     @Autowired
