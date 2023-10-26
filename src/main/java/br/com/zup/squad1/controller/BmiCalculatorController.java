@@ -3,6 +3,7 @@ package br.com.zup.squad1.controller;
 import br.com.zup.squad1.dto.BmiCalculatorRequestDTO;
 import br.com.zup.squad1.dto.BmiCalculatorResponseDTO;
 import br.com.zup.squad1.service.BmiCalculatorService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.math.RoundingMode;
 
 @RestController
 @RequestMapping("/imc")
+@Tag(name = "IMC")
 public class BmiCalculatorController {
 
     @Autowired
