@@ -1,5 +1,6 @@
 package br.com.zup.squad1.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BmiCalculatorRequestDTO {
     @NotNull
+    @JsonProperty(value = "altura")
     private double height;
     @NotNull
+    @JsonProperty(value = "peso")
     private double weight;
 }

@@ -38,10 +38,22 @@ class BmiCalculatorControllerTest {
         when(service.getBmiResult(requestDTO)).thenReturn(result);
         when(service.getClassification(result)).thenReturn(message);
 
-        ResponseEntity<BmiCalculatorResponseDTO> responseEntity = controller.calculateBmi(requestDTO);
+        ResponseEntity<Object> responseEntity = controller.calculateBmi(requestDTO);
 
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-        assertEquals(responseDTO.getResult(), responseEntity.getBody().getResult());
-        assertEquals(responseDTO.getMessage(), responseEntity.getBody().getMessage());
+        assertEquals(responseDTO, responseEntity.getBody());
+    }
+
+    @Test
+    @DisplayName("Deve retornar que os valores dos campos devem ser maior que 0")
+    public void calculateBmiError() {
+        BmiCalculatorRequestDTO requestDTO = new BmiCalculatorRequestDTO(1.60, -50.0);
+
+        ResponseEntity<Object> response = controller.calculateBmi(requestDTO);
+
+        String message = "Os campos de peso e altura devem ser preenchidos com um valor decimal maior que 0.";
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(message, response.getBody());
     }
 }

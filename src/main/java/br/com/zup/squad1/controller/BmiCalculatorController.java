@@ -25,7 +25,10 @@ public class BmiCalculatorController {
     BmiCalculatorService service;
 
     @PostMapping
-    public ResponseEntity<BmiCalculatorResponseDTO> calculateBmi (@RequestBody @Valid BmiCalculatorRequestDTO requestDTO){
+    public ResponseEntity<Object> calculateBmi(@RequestBody @Valid BmiCalculatorRequestDTO requestDTO) {
+        if (requestDTO.getHeight() <= 0 || requestDTO.getWeight() <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Os campos de peso e altura devem ser preenchidos com um valor decimal maior que 0.");
+        }
         double result = service.getBmiResult(requestDTO);
         String message = service.getClassification(result);
 
