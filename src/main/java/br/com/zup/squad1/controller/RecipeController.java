@@ -1,6 +1,5 @@
 package br.com.zup.squad1.controller;
 
-import br.com.zup.squad1.controller.request.RecipeDTORequest;
 import br.com.zup.squad1.dto.RecipeDTO;
 import br.com.zup.squad1.model.RecipeModel;
 import br.com.zup.squad1.service.RecipeService;
@@ -12,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 @Validated
 @RestController
 @RequestMapping("recipes")
@@ -19,30 +19,30 @@ import org.springframework.web.bind.annotation.*;
 public class RecipeController {
     @Autowired
     private RecipeService recipeService;
+    RecipeDTO recipeDTO = new RecipeDTO();
 
     @PostMapping
-    public ResponseEntity<Object> registerRecipe(@Valid @RequestBody RecipeDTORequest recipeDTORequest) {
-        RecipeModel recipeModel = new RecipeModel();
-        BeanUtils.copyProperties(recipeDTORequest, recipeModel);
-
-        try {
-            RecipeModel createdRecipe = recipeService.registerRecipe(recipeModel);
-
-            RecipeDTORequest createdRecipeDTORequest = new RecipeDTORequest();
-
-            BeanUtils.copyProperties(createdRecipe, createdRecipeDTORequest);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdRecipeDTORequest);
-        } catch (IllegalArgumentException e) {
+    public ResponseEntity<Object> registerRecipe(@Valid @RequestBody RecipeDTO recipeDTO) {
+        if (recipeDTO.getName().isEmpty() || recipeDTO.getPreparation().isEmpty() || recipeDTO.getDifficulty().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não é permitido valores nulos");
         }
-    }
+        RecipeModel recipeModel = new RecipeModel();
+        BeanUtils.copyProperties(recipeDTO, recipeModel);
+        try {
+            RecipeModel createdRecipe = recipeService.registerRecipe(recipeModel);
+            RecipeDTO createdRecipeDTO = new RecipeDTO();
+            BeanUtils.copyProperties(createdRecipe, createdRecipeDTO);
 
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdRecipeDTO);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ocorreu um problema ao registrar a receita");
+        }
+    }
     @GetMapping("/{id}")
     public ResponseEntity<Object> consultRecipe(@PathVariable Long id) {
         RecipeModel recipe = recipeService.consultRecipe(id);
 
         if (recipe != null) {
-            RecipeDTO recipeDTO = new RecipeDTO();
             BeanUtils.copyProperties(recipe, recipeDTO);
             return ResponseEntity.status(HttpStatus.OK).body(recipeDTO);
         } else {
@@ -66,7 +66,6 @@ public class RecipeController {
             RecipeModel recipeChanged = recipeService.changeRecipe(id, newRecipe);
 
             if (recipeChanged != null) {
-                RecipeDTO recipeDTO = new RecipeDTO();
                 BeanUtils.copyProperties(recipeChanged, recipeDTO);
                 return ResponseEntity.status(HttpStatus.OK).body(recipeDTO);
             } else {

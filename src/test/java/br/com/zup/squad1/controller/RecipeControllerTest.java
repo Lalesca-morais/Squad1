@@ -1,6 +1,6 @@
 package br.com.zup.squad1.controller;
 
-import br.com.zup.squad1.controller.request.RecipeDTORequest;
+
 import br.com.zup.squad1.dto.RecipeDTO;
 import br.com.zup.squad1.model.RecipeModel;
 import br.com.zup.squad1.service.RecipeService;
@@ -23,6 +23,7 @@ public class RecipeControllerTest {
     private RecipeController recipeController;
     @Mock
     private RecipeService recipeService;
+    RecipeModel newRecipeModel = new RecipeModel();
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -30,20 +31,20 @@ public class RecipeControllerTest {
 
     @Test
     public void testRegisterRecipe() {
-        RecipeDTORequest recipeDTORequest = new RecipeDTORequest();
-        recipeDTORequest.setName("Test Recipe");
-        recipeDTORequest.setPreparation("Test Preparation");
-        recipeDTORequest.setDifficulty("Medium");
-        recipeDTORequest.setIngredients(new ArrayList<>());
+        RecipeDTO recipeDTO = new RecipeDTO();
+        recipeDTO.setName("Test Recipe");
+        recipeDTO.setPreparation("Test Preparation");
+        recipeDTO.setDifficulty("Medium");
+        recipeDTO.setIngredients(new ArrayList<>());
 
         RecipeModel recipeModel = new RecipeModel();
-        BeanUtils.copyProperties(recipeDTORequest, recipeModel);
+        BeanUtils.copyProperties(recipeDTO, recipeModel);
 
         Mockito.when(recipeService.registerRecipe(Mockito.any(RecipeModel.class))).thenReturn(recipeModel);
-        ResponseEntity<Object> response = recipeController.registerRecipe(recipeDTORequest);
+        ResponseEntity<Object> response = recipeController.registerRecipe(recipeDTO);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        RecipeDTORequest responseDTO = (RecipeDTORequest) response.getBody();
+        RecipeDTO responseDTO = (RecipeDTO) response.getBody();
 
         assertEquals("Test Recipe", responseDTO.getName());
         assertEquals("Test Preparation", responseDTO.getPreparation());
@@ -52,8 +53,8 @@ public class RecipeControllerTest {
 
     @Test
     public void testConsultRecipe() {
-        Long recipeId = 1L;
         RecipeModel recipeModel = new RecipeModel();
+        Long recipeId = 1L;
         recipeModel.setId(recipeId);
         recipeModel.setName("Test Recipe");
         recipeModel.setPreparation("Test Preparation");
@@ -117,7 +118,6 @@ public class RecipeControllerTest {
     @Test
     public void testChangeRecipeNotFound() {
         Long recipeId = 1L;
-        RecipeModel newRecipeModel = new RecipeModel();
 
         Mockito.when(recipeService.changeRecipe(recipeId, newRecipeModel)).thenReturn(null);
         ResponseEntity<Object> response = recipeController.changeRecipe(recipeId, newRecipeModel);
