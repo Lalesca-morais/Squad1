@@ -3,8 +3,8 @@ package br.com.zup.squad1.dto;
 import br.com.zup.squad1.model.enums.State;
 import br.com.zup.squad1.model.enums.ProductType;
 import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,14 +19,15 @@ import java.time.LocalDate;
 public class IngredientDTO {
     private Long id;
 
-    @NotBlank
+    @NotNull
     private String name;
 
     @Future(groups = WithValidity.class)
     private LocalDate validity;
 
     @NotNull
-    private double amount;
+    @Positive
+    private Double amount;
 
     private ProductType productType;
     private State state;
