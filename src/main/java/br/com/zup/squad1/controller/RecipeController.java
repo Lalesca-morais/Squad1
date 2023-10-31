@@ -1,5 +1,6 @@
 package br.com.zup.squad1.controller;
 
+import br.com.zup.squad1.controller.request.RecipeDTORequest;
 import br.com.zup.squad1.dto.RecipeDTO;
 import br.com.zup.squad1.model.RecipeModel;
 import br.com.zup.squad1.service.RecipeService;
@@ -22,15 +23,12 @@ public class RecipeController {
     RecipeDTO recipeDTO = new RecipeDTO();
 
     @PostMapping
-    public ResponseEntity<Object> registerRecipe(@Valid @RequestBody RecipeDTO recipeDTO) {
-        if (recipeDTO.getName().isEmpty() || recipeDTO.getPreparation().isEmpty() || recipeDTO.getDifficulty().isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não é permitido valores nulos");
-        }
+    public ResponseEntity<Object> registerRecipe(@Valid @RequestBody RecipeDTORequest recipeDTO) {
         RecipeModel recipeModel = new RecipeModel();
         BeanUtils.copyProperties(recipeDTO, recipeModel);
         try {
             RecipeModel createdRecipe = recipeService.registerRecipe(recipeModel);
-            RecipeDTO createdRecipeDTO = new RecipeDTO();
+            RecipeDTORequest createdRecipeDTO = new RecipeDTORequest();
             BeanUtils.copyProperties(createdRecipe, createdRecipeDTO);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(createdRecipeDTO);
