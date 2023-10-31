@@ -1,5 +1,6 @@
 package br.com.zup.squad1.controller;
 
+
 import br.com.zup.squad1.dto.RecipeDTO;
 import br.com.zup.squad1.model.RecipeModel;
 import br.com.zup.squad1.service.RecipeService;
@@ -9,9 +10,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
 import org.springframework.beans.BeanUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RecipeControllerTest {
@@ -19,6 +23,7 @@ public class RecipeControllerTest {
     private RecipeController recipeController;
     @Mock
     private RecipeService recipeService;
+    RecipeModel newRecipeModel = new RecipeModel();
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -30,34 +35,39 @@ public class RecipeControllerTest {
         recipeDTO.setName("Test Recipe");
         recipeDTO.setPreparation("Test Preparation");
         recipeDTO.setDifficulty("Medium");
+        recipeDTO.setIngredients(new ArrayList<>());
 
         RecipeModel recipeModel = new RecipeModel();
         BeanUtils.copyProperties(recipeDTO, recipeModel);
 
-        Mockito.when(recipeService.registerRecipe(recipeModel)).thenReturn(recipeModel);
-        ResponseEntity<RecipeModel> response = recipeController.registerRecipe(recipeDTO);
+        Mockito.when(recipeService.registerRecipe(Mockito.any(RecipeModel.class))).thenReturn(recipeModel);
+        ResponseEntity<Object> response = recipeController.registerRecipe(recipeDTO);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(recipeModel, response.getBody());
+        RecipeDTO responseDTO = (RecipeDTO) response.getBody();
+
+        assertEquals("Test Recipe", responseDTO.getName());
+        assertEquals("Test Preparation", responseDTO.getPreparation());
+        assertEquals("Medium", responseDTO.getDifficulty());
     }
 
     @Test
     public void testConsultRecipe() {
-        Long recipeId = 1L;
         RecipeModel recipeModel = new RecipeModel();
+        Long recipeId = 1L;
         recipeModel.setId(recipeId);
         recipeModel.setName("Test Recipe");
         recipeModel.setPreparation("Test Preparation");
         recipeModel.setDifficulty("Easy");
 
         Mockito.when(recipeService.consultRecipe(recipeId)).thenReturn(recipeModel);
-        ResponseEntity<RecipeDTO> response = recipeController.consultRecipe(recipeId);
+        ResponseEntity<Object> response = recipeController.consultRecipe(recipeId);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        RecipeDTO recipeDTO = response.getBody();
-        assertEquals("Test Recipe", recipeDTO.getName());
-        assertEquals("Test Preparation", recipeDTO.getPreparation());
-        assertEquals("Easy", recipeDTO.getDifficulty());
+        RecipeDTO responseDTO = (RecipeDTO) response.getBody();
+        assertEquals("Test Recipe", responseDTO.getName());
+        assertEquals("Test Preparation", responseDTO.getPreparation());
+        assertEquals("Easy", responseDTO.getDifficulty());
     }
 
     @Test
@@ -66,7 +76,7 @@ public class RecipeControllerTest {
 
         Mockito.when(recipeService.consultRecipe(recipeId)).thenReturn(null);
 
-        ResponseEntity<RecipeDTO> response = recipeController.consultRecipe(recipeId);
+        ResponseEntity<Object> response = recipeController.consultRecipe(recipeId);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
@@ -75,7 +85,7 @@ public class RecipeControllerTest {
     public void testDeleteRecipe() {
         Long recipeId = 1L;
         Mockito.doNothing().when(recipeService).deleteRecipe(recipeId);
-        ResponseEntity<Void> response = recipeController.deleteRecipe(recipeId);
+        ResponseEntity<Object> response = recipeController.deleteRecipe(recipeId);
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
@@ -95,10 +105,11 @@ public class RecipeControllerTest {
         recipeChanged.setDifficulty("Easy");
 
         Mockito.when(recipeService.changeRecipe(recipeId, newRecipeModel)).thenReturn(recipeChanged);
-        ResponseEntity<RecipeDTO> response = recipeController.changeRecipe(recipeId, newRecipeModel);
+
+        ResponseEntity<Object> response = recipeController.changeRecipe(recipeId, newRecipeModel);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        RecipeDTO recipeDTO = response.getBody();
+        RecipeDTO recipeDTO = (RecipeDTO) response.getBody();
         assertEquals("Test Recipe", recipeDTO.getName());
         assertEquals("Test Preparation", recipeDTO.getPreparation());
         assertEquals("Easy", recipeDTO.getDifficulty());
@@ -107,10 +118,9 @@ public class RecipeControllerTest {
     @Test
     public void testChangeRecipeNotFound() {
         Long recipeId = 1L;
-        RecipeModel newRecipeModel = new RecipeModel();
 
         Mockito.when(recipeService.changeRecipe(recipeId, newRecipeModel)).thenReturn(null);
-        ResponseEntity<RecipeDTO> response = recipeController.changeRecipe(recipeId, newRecipeModel);
+        ResponseEntity<Object> response = recipeController.changeRecipe(recipeId, newRecipeModel);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }

@@ -20,12 +20,14 @@ import java.util.List;
 @Tag(name = "Expired Ingredients")
 public class ExpiredIngredientsController {
     private final ExpiredIngredientsService expiredIngredientsService;
-    @Autowired
+
     public ExpiredIngredientsController(ExpiredIngredientsService expiredIngredientsService) {
         this.expiredIngredientsService = expiredIngredientsService;
     }
     @GetMapping
-    public List<IngredientDTO> listExpiredIngredients(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate currentDate) {
+    public List<IngredientDTO> listExpiredIngredients(@RequestParam(required = false, defaultValue = "") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate currentDate) {
+            currentDate = LocalDate.now();
+
         List<Ingredient> expiredIngredients = expiredIngredientsService.listExpiredIngredients(currentDate);
         List<IngredientDTO> ingredientDTOs = new ArrayList<>();
 

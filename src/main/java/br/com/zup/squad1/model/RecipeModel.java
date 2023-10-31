@@ -2,6 +2,8 @@ package br.com.zup.squad1.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +19,9 @@ public class RecipeModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
+    @NotEmpty
     private String name;
 
     @JsonIgnore
@@ -26,9 +31,14 @@ public class RecipeModel {
             inverseJoinColumns = @JoinColumn(name = "id_ingredient"))
     private Set<Ingredient> ingredients;
 
+    @NotNull
+    @NotEmpty
     @Column(length = 600)
     private String preparation;
 
+    @NotNull
+    @NotEmpty
+    @Column(length = 10)
     private String difficulty;
 }
 
