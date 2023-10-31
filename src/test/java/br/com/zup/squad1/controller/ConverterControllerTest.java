@@ -33,8 +33,45 @@ public class ConverterControllerTest {
                 requestDTO.getMeasure(),requestDTO.getType_to_be_converted()))
                 .thenReturn("20.0");
 
-        ResponseEntity<ConverterResponseDTO> response = converterController.converter(requestDTO);
+        ResponseEntity<?> response = converterController.converter(requestDTO);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+    @Test
+    @DisplayName("Teste se o metodo 'converter' retorna status 400(Bad request) com quantidade inválida")
+    void converter_t2(){
+        ConverterRequestDTO requestDTO = new ConverterRequestDTO();
+        requestDTO.setValue_to_be_converted(0);
+        requestDTO.setMeasure(1);
+        requestDTO.setType_to_be_converted(2);
+
+        ResponseEntity<?> response = converterController.converter(requestDTO);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
+    @Test
+    @DisplayName("Teste se o metodo 'converter' retorna status 400(Bad request) com medida inválida")
+    void converter_t3(){
+        ConverterRequestDTO requestDTO = new ConverterRequestDTO();
+        requestDTO.setValue_to_be_converted(350);
+        requestDTO.setMeasure(8);
+        requestDTO.setType_to_be_converted(2);
+
+        ResponseEntity<?> response = converterController.converter(requestDTO);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
+
+    @Test
+    @DisplayName("Teste se o metodo 'converter' retorna status 400(Bad request) com tipo convertido inválido")
+    void converter_t4(){
+        ConverterRequestDTO requestDTO = new ConverterRequestDTO();
+        requestDTO.setValue_to_be_converted(560);
+        requestDTO.setMeasure(1);
+        requestDTO.setType_to_be_converted(0);
+
+        ResponseEntity<?> response = converterController.converter(requestDTO);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 }
