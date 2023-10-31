@@ -1,5 +1,6 @@
 package br.com.zup.squad1.controller;
 
+import br.com.zup.squad1.controller.request.RecipeDTORequest;
 import br.com.zup.squad1.dto.RecipeDTO;
 import br.com.zup.squad1.model.RecipeModel;
 import br.com.zup.squad1.service.RecipeService;
@@ -20,15 +21,17 @@ public class RecipeController {
     private RecipeService recipeService;
 
     @PostMapping
-    public ResponseEntity<Object> registerRecipe(@Valid @RequestBody RecipeDTO recipeDTO) {
+    public ResponseEntity<Object> registerRecipe(@Valid @RequestBody RecipeDTORequest recipeDTORequest) {
         RecipeModel recipeModel = new RecipeModel();
-        BeanUtils.copyProperties(recipeDTO, recipeModel);
+        BeanUtils.copyProperties(recipeDTORequest, recipeModel);
 
         try {
             RecipeModel createdRecipe = recipeService.registerRecipe(recipeModel);
-            RecipeDTO createdRecipeDTO = new RecipeDTO();
-            BeanUtils.copyProperties(createdRecipe, createdRecipeDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdRecipeDTO);
+
+            RecipeDTORequest createdRecipeDTORequest = new RecipeDTORequest();
+
+            BeanUtils.copyProperties(createdRecipe, createdRecipeDTORequest);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdRecipeDTORequest);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não é permitido valores nulos");
         }
