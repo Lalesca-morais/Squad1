@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import br.com.zup.squad1.dto.ConverterRequestDTO;
 import br.com.zup.squad1.dto.ConverterResponseDTO;
 import br.com.zup.squad1.service.ConverterService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,16 @@ public class ConverterController {
 
     private final ConverterService converterService;
     @PostMapping
-    public ResponseEntity<ConverterResponseDTO> converter(@RequestBody @Valid ConverterRequestDTO request) {
+    public ResponseEntity<?> converter(@RequestBody @Valid ConverterRequestDTO request) {
+        if(request.getValue_to_be_converted()<=0){
+            return ResponseEntity.badRequest().body("A quantidade deve ser maior que zero");
+        }
+        if (request.getMeasure() < 1 || request.getMeasure() > 4){
+            return ResponseEntity.badRequest().body("Medida inválida, digite uma medida que esteja entre 1 e 4");
+        }
+        if (request.getType_to_be_converted() < 1 || request.getType_to_be_converted() > 3){
+            return ResponseEntity.badRequest().body("Tipo a ser convertido inválido, digite um tipo que esteja entre 1 e 3");
+        }
         String value_converted = converterService.converterMeasure(request.getValue_to_be_converted(), request.getMeasure(), request.getType_to_be_converted());
         ConverterResponseDTO response = new ConverterResponseDTO();
         response.setConverted_value(value_converted);
