@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import br.com.zup.squad1.service.IngredientService;
 
@@ -20,6 +21,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/ingredients")
 @Tag(name = "Ingredients")
+@Validated
 public class IngredientController {
     private final IngredientService ingredientService;
     @Autowired
@@ -29,6 +31,7 @@ public class IngredientController {
     public IngredientController(IngredientService ingredientService) {
         this.ingredientService = ingredientService;
     }
+
 
     @PostMapping
     public ResponseEntity<Ingredient> addIngredient(@Valid @RequestBody IngredientDTO ingredientDTO) {
@@ -107,13 +110,13 @@ public class IngredientController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteIngredient(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteIngredient(@PathVariable Long id) throws IngredientNotFound {
         ingredientService.deleteIngredient(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/about-to-expire")
-    public List<Map<String, Object>> getIngredientsAboutToExpire(){
+    public List<Map<String, Object>> getIngredientsAboutToExpire() {
         return notificationService.notifyIngredientsNearExpiration();
     }
 }

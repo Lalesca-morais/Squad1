@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
-
 @ExtendWith(SpringExtension.class)
 public class ConverterControllerTest {
     @InjectMocks
@@ -33,7 +32,7 @@ public class ConverterControllerTest {
                 requestDTO.getMeasure(),requestDTO.getType_to_be_converted()))
                 .thenReturn("20.0");
 
-        ResponseEntity<ConverterResponseDTO> response = converterController.converter(requestDTO);
+        ResponseEntity<?> response = converterController.converter(requestDTO);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }

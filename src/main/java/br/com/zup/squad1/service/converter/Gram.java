@@ -1,8 +1,7 @@
 package br.com.zup.squad1.service.converter;
 
-
+import br.com.zup.squad1.exceptions.BadRequestException;
 public class Gram implements Converter{
-
     @Override
     public String converter(double value_to_be_converted, int type_to_be_converted) {
 
@@ -22,7 +21,7 @@ public class Gram implements Converter{
                 return String.format("%.0f colher de sopa(s)", result);
 
             default:
-               throw new IllegalArgumentException();
+                throw new BadRequestException("Preenchimento inválido");
         }
     }
 }

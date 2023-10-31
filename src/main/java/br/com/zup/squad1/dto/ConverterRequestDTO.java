@@ -3,26 +3,22 @@ package br.com.zup.squad1.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
-
 @Data
 public class ConverterRequestDTO {
-    @Positive(message = "Quantidade deve ser maior que 0")
-    @NotNull
+
     @JsonProperty(value = "valor")
+    @Positive(message = "Quantidade inválida, quantidade deve ser maior que zero")
     private double value_to_be_converted;
 
-    @Min(value = 1)
-    @Max(value = 4,message = "Opção de medida inválida")
-    @NotNull
     @JsonProperty(value = "medida")
+    @Min(value = 1, message = "Medida inválida, digite uma medida que esteja entre 1 e 4")
+    @Max(value = 4, message = "Medida inválida, digite uma medida que esteja entre 1 e 4")
     private int measure;
 
-    @Min(value = 1)
-    @Max(value = 3,message = "Opção de conversão inválida")
-    @NotNull
     @JsonProperty(value = "tipo convertido")
+    @Min(value = 1, message = "Tipo a ser convertido inválido, digite um tipo que esteja entre 1 e 3")
+    @Max(value = 3, message = "Tipo a ser convertido inválido, digite um tipo que esteja entre 1 e 3")
     private int type_to_be_converted;
 }
