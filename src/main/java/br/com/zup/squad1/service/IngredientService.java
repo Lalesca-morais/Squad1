@@ -39,7 +39,7 @@ public class IngredientService {
     }
 
     public Ingredient updateIngredient(Long id, Ingredient ingredient) throws IngredientNotFound {
-        Optional<Ingredient> existingIngredient = ingredientRepository.findById(id);
+        Optional<Ingredient> existingIngredient = Optional.ofNullable(ingredientRepository.findById(id).orElseThrow(() -> new IngredientNotFound("Ingrediente não encontrado pelo ID: " + id)));;
 
         if (existingIngredient.isPresent()) {
             Ingredient updatedIngredient = existingIngredient.get();
@@ -52,7 +52,8 @@ public class IngredientService {
         }
     }
 
-    public void deleteIngredient(Long id) {
+    public void deleteIngredient(Long id) throws IngredientNotFound {
+        Optional<Ingredient> ingredient = Optional.ofNullable(ingredientRepository.findById(id).orElseThrow(() -> new IngredientNotFound("Ingrediente não encontrado pelo ID: " + id)));
         ingredientRepository.deleteById(id);
     }
 

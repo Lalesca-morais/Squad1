@@ -4,6 +4,8 @@ import br.com.zup.squad1.model.enums.ProductType;
 import br.com.zup.squad1.model.enums.State;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,6 +50,6 @@ public class Ingredient {
     @JsonIgnore
     @ManyToMany(mappedBy = "ingredients")
     private Set<RecipeModel> recipes = new HashSet<>();
-    
+
 }
 
