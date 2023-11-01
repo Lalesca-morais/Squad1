@@ -14,7 +14,7 @@ public class RecipeDTO {
     private String name;
     private String preparation;
     private String difficulty;
-    private List<RecipeIngredientDto> ingredients;
+    private List<RecipeIngredientResponseDTO> ingredients;
 }
 
 

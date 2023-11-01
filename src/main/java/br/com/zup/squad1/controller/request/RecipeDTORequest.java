@@ -1,6 +1,6 @@
 package br.com.zup.squad1.controller.request;
 
-import br.com.zup.squad1.dto.RecipeIngredientDto;
+import br.com.zup.squad1.dto.RecipeIngredientRequestDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -25,7 +25,7 @@ public class RecipeDTORequest {
     private String difficulty;
 
     @Valid
-    private List<@NotNull RecipeIngredientDto> ingredients;
+    private List<@NotNull RecipeIngredientRequestDTO> ingredients;
 }
 
 
