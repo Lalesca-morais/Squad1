@@ -129,7 +129,7 @@ public class IngredientServiceTest {
     }
 
     @Test
-    public void deleteIngredientById() {
+    public void deleteIngredientById() throws IngredientNotFound {
         Long id = 1L;
 
         doNothing().when(ingredientRepository).deleteById(id);
