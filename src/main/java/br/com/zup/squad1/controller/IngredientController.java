@@ -1,11 +1,15 @@
 package br.com.zup.squad1.controller;
 
+import br.com.zup.squad1.controller.validation.Validations;
+import br.com.zup.squad1.controller.validation.exception.ValidationFieldsException;
 import br.com.zup.squad1.dto.IngredientDTO;
 import br.com.zup.squad1.exceptions.IngredientNotFound;
 import br.com.zup.squad1.model.Ingredient;
 import br.com.zup.squad1.service.NotificationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +38,10 @@ public class IngredientController {
 
 
     @PostMapping
-    public ResponseEntity<Ingredient> addIngredient(@Valid @RequestBody IngredientDTO ingredientDTO) {
+    public ResponseEntity<Ingredient> addIngredient(@Valid @RequestBody IngredientDTO ingredientDTO) throws ValidationFieldsException {
+        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+        Validations validations = new Validations(validator, ingredientDTO);
+        validations.validationRequest();
         Ingredient ingredient = new Ingredient();
         ingredient.setName(ingredientDTO.getName());
         ingredient.setValidity(ingredientDTO.getValidity());
