@@ -1,7 +1,6 @@
 package br.com.zup.squad1.controller;
 
-import br.com.zup.squad1.dto.RecipeDTO;
-import br.com.zup.squad1.dto.RecipeIngredientDto;
+import br.com.zup.squad1.dto.RecipeIngredientRequestDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import br.com.zup.squad1.model.RecipeIngredientModel;
@@ -13,10 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import br.com.zup.squad1.service.RecipeIngredientService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/recipe-ingredients")
@@ -26,7 +23,7 @@ public class RecipeIngredientController {
     RecipeIngredientService service;
 
     @PostMapping
-    public ResponseEntity<RecipeIngredientModel> save(@RequestBody @Valid RecipeIngredientDto recipeIngredientDto){
+    public ResponseEntity<RecipeIngredientModel> save(@RequestBody @Valid RecipeIngredientRequestDTO recipeIngredientDto){
         RecipeIngredientModel recipeIngredient = new RecipeIngredientModel();
         recipeIngredient.setId_recipe(recipeIngredientDto.getIdRecipe());
         recipeIngredient.setId_ingredient(recipeIngredientDto.getIdIngredient());
@@ -45,7 +42,7 @@ public class RecipeIngredientController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@PathVariable(value = "id") Long id, @RequestBody @Valid RecipeIngredientDto recipeIngredientDto){
+    public ResponseEntity<Object> update(@PathVariable(value = "id") Long id, @RequestBody @Valid RecipeIngredientRequestDTO recipeIngredientDto){
         Optional<RecipeIngredientModel> recipeIngredientOptional = service.findById(id);
         if(recipeIngredientOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ingrediente de Receita não encontrado!");
@@ -57,34 +54,18 @@ public class RecipeIngredientController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<RecipeDTO>> getRecipesByIngredientId(@PathVariable(value = "id") Long id_ingredient) {
+    public ResponseEntity<Object> getRecipesByIngredientId(@PathVariable(value = "id") Long id_ingredient) {
         List<RecipeModel> recipes = service.findRecipesByIngredientId(id_ingredient);
-
         if (recipes.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        List<RecipeDTO> recipeDTOs = recipes.stream()
-                .map(recipe -> {
-                    RecipeDTO dto = new RecipeDTO();
-                    dto.setId(recipe.getId());
-                    dto.setName(recipe.getName());
-                    dto.setPreparation(recipe.getPreparation());
-                    dto.setDifficulty(recipe.getDifficulty());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não há receitas cadastradas com o ingrediente informado!");
+        } else return ResponseEntity.status(HttpStatus.OK).body(service.formatRecipe(recipes));
+    }
 
-                    List<RecipeIngredientModel> ingredientModels = service.findRecipeIngredientsByRecipeId(recipe.getId());
-                    List<RecipeIngredientDto> ingredientDtos = new ArrayList<>();
-                    for (RecipeIngredientModel ingredient: ingredientModels) {
-                        RecipeIngredientDto recipeIngredientDto = new RecipeIngredientDto();
-                        recipeIngredientDto.setIdRecipe(recipe.getId());
-                        recipeIngredientDto.setIdIngredient(ingredient.getId_ingredient());
-                        recipeIngredientDto.setIngredientQuantity(ingredient.getIngredientQuantity());
-                        ingredientDtos.add(recipeIngredientDto);
-                    }
-
-                    dto.setIngredients(ingredientDtos);
-                    return dto;
-                })
-                .collect(Collectors.toList());
-        return ResponseEntity.status(HttpStatus.OK).body(recipeDTOs);
+    @GetMapping("/IngredientsName")
+    public ResponseEntity<Object> getRecipesByIngredientsName(@RequestParam List<String> ingredientsName, @RequestParam int ingredientCount) {
+        List<RecipeModel> recipes = service.findRecipesByIngredientsNames(ingredientsName, ingredientCount);
+        if (recipes.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não há receitas cadastradas com os ingredientes informados!");
+        } else return ResponseEntity.status(HttpStatus.OK).body(service.formatRecipe(recipes));
     }
 }

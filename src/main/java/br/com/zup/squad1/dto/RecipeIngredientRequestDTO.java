@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RecipeIngredientDto{
+public class RecipeIngredientRequestDTO {
     @NotNull
     private Long idRecipe;
     @NotNull
