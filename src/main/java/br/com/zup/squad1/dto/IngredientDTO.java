@@ -1,8 +1,10 @@
 package br.com.zup.squad1.dto;
 
+import br.com.zup.squad1.controller.validation.DueDateValidation;
 import br.com.zup.squad1.model.enums.State;
 import br.com.zup.squad1.model.enums.ProductType;
 import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -19,9 +21,10 @@ import java.time.LocalDate;
 public class IngredientDTO {
     private Long id;
 
-    @NotNull
+    @NotBlank
     private String name;
 
+    @NotNull(groups = DueDateValidation.class, message = "Data de validade nao deve ser null")
     @Future(groups = WithValidity.class)
     private LocalDate validity;
 
