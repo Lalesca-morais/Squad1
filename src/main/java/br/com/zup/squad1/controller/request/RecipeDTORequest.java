@@ -1,6 +1,7 @@
 package br.com.zup.squad1.controller.request;
 
 import br.com.zup.squad1.dto.RecipeIngredientDto;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -13,18 +14,23 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RecipeDTORequest {
+
     private Long id;
 
     @NotEmpty
+    @JsonProperty("nome")
     private String name;
 
     @NotEmpty
+    @JsonProperty("preparo")
     private String preparation;
 
     @NotEmpty
+    @JsonProperty("dificuldade")
     private String difficulty;
 
     @Valid
+    @JsonProperty("ingredientes")
     private List<@NotNull RecipeIngredientDto> ingredients;
 }
 

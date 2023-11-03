@@ -10,8 +10,13 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Validated
 @RestController
@@ -36,6 +41,7 @@ public class RecipeController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ocorreu um problema ao registrar a receita");
         }
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<Object> consultRecipe(@PathVariable Long id) {
         RecipeModel recipe = recipeService.consultRecipe(id);
