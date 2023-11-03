@@ -18,7 +18,7 @@ public class RecipeDTO {
 
     private String difficulty;
 
-    private List<RecipeIngredientDto> ingredients;
+    private List<RecipeIngredientResponseDTO> ingredients;
 }
 
 

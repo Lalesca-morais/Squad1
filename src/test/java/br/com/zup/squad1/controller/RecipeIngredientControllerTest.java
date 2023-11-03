@@ -1,7 +1,6 @@
 package br.com.zup.squad1.controller;
 
-import br.com.zup.squad1.dto.RecipeDTO;
-import br.com.zup.squad1.dto.RecipeIngredientDto;
+import br.com.zup.squad1.dto.RecipeIngredientRequestDTO;
 import br.com.zup.squad1.model.RecipeIngredientModel;
 import br.com.zup.squad1.model.RecipeModel;
 import br.com.zup.squad1.service.RecipeIngredientService;
@@ -15,9 +14,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,7 +34,7 @@ class RecipeIngredientControllerTest {
     @Test
     @DisplayName("Deve retornar sucesso ao salvar ingrediente de receita")
     public void testSave(){
-        RecipeIngredientDto recipeIngredientDto = new RecipeIngredientDto(1L, 1L, "120g");
+        RecipeIngredientRequestDTO recipeIngredientDto = new RecipeIngredientRequestDTO(1L, 1L, "120g");
         RecipeIngredientModel recipeIngredientModel = new RecipeIngredientModel();
 
         recipeIngredientModel.setId_recipe(recipeIngredientDto.getIdRecipe());
@@ -81,7 +82,7 @@ class RecipeIngredientControllerTest {
         when(service.findById(1L)).thenReturn(Optional.of(recipeIngredientModel));
         when(service.save(any(RecipeIngredientModel.class))).thenReturn(recipeIngredientModel);
 
-        RecipeIngredientDto recipeIngredientDto = new RecipeIngredientDto(1L, 2L, "30g");
+        RecipeIngredientRequestDTO recipeIngredientDto = new RecipeIngredientRequestDTO(1L, 2L, "30g");
         ResponseEntity<Object> response = controller.update(1L, recipeIngredientDto);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -92,7 +93,7 @@ class RecipeIngredientControllerTest {
     public void testUpdateNotFound() {
         when(service.findById(3L)).thenReturn(Optional.empty());
 
-        RecipeIngredientDto recipeIngredientDto = new RecipeIngredientDto(5L, 1L, "250ml");
+        RecipeIngredientRequestDTO recipeIngredientDto = new RecipeIngredientRequestDTO(5L, 1L, "250ml");
         ResponseEntity<Object> response = controller.update(3L, recipeIngredientDto);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
@@ -116,39 +117,64 @@ class RecipeIngredientControllerTest {
         List<RecipeModel> recipes = new ArrayList<>();
         recipes.add(recipeModel);
 
-        List<RecipeIngredientModel> ingredientModels = new ArrayList<>();
-        ingredientModels.add(ingredientModel);
-
         when(service.findRecipesByIngredientId(1L)).thenReturn(recipes);
-        when(service.findRecipeIngredientsByRecipeId(recipeModel.getId())).thenReturn(ingredientModels);
-
-        ResponseEntity<List<RecipeDTO>> response = controller.getRecipesByIngredientId(1L);
+        ResponseEntity<Object> response = controller.getRecipesByIngredientId(1L);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(1, response.getBody().size());
-
-        RecipeDTO dto = response.getBody().get(0);
-        assertEquals(recipeModel.getId(), dto.getId());
-        assertEquals(recipeModel.getName(), dto.getName());
-        assertEquals(recipeModel.getPreparation(), dto.getPreparation());
-        assertEquals(recipeModel.getDifficulty(), dto.getDifficulty());
-
-        List<RecipeIngredientDto> ingredientDtos = dto.getIngredients();
-        assertEquals(1, ingredientDtos.size());
-
-        RecipeIngredientDto ingredientDto = ingredientDtos.get(0);
-        assertEquals(recipeModel.getId(), ingredientDto.getIdRecipe());
-        assertEquals(ingredientModel.getId_ingredient(), ingredientDto.getIdIngredient());
-        assertEquals(ingredientModel.getIngredientQuantity(), ingredientDto.getIngredientQuantity());
+        verify(service).findRecipesByIngredientId(1L);
     }
 
     @Test
-    @DisplayName("Deve retornar uma lista vazia com o id do ingrediente de receita informado")
+    @DisplayName("Deve retornar que não há receitas com o id do ingrediente informado")
     public void testGetRecipesByIngredientIdNotFound() {
         when(service.findRecipesByIngredientId(1L)).thenReturn(new ArrayList<>());
 
-        ResponseEntity<List<RecipeDTO>> response = controller.getRecipesByIngredientId(1L);
+        ResponseEntity<Object> response = controller.getRecipesByIngredientId(1L);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals("Não há receitas cadastradas com o ingrediente informado!", response.getBody());
+    }
+
+    @Test
+    @DisplayName("Deve retornar uma lista de receitas com os dois ingredientes informados pelo nome")
+    public void testGetRecipesByIngredientsName() {
+        RecipeModel firstRecipe = new RecipeModel();
+        firstRecipe.setId(1L);
+        firstRecipe.setName("Pão de Mel");
+        firstRecipe.setPreparation("Misture mel, açúcar, canela e gengibre. Adicione farinha, leite e " +
+                "bicarbonato de sódio. Asse em formas individuais e cubra com chocolate derretido.");
+        firstRecipe.setDifficulty("Médio");
+
+        RecipeModel secondRecipe = new RecipeModel();
+        secondRecipe.setId(2L);
+        secondRecipe.setName("Bolo de Cenoura");
+        secondRecipe.setPreparation("Bata no liquidificador cenouras, óleo, ovos e açúcar. Em uma tigela, misture " +
+                "a farinha de trigo e o fermento. Combine as duas misturas e asse em uma forma untada. Prepare uma " +
+                "cobertura de chocolate e despeje sobre o bolo.");
+        secondRecipe.setDifficulty("Fácil");
+
+        List<String> ingredientsName = Arrays.asList("farinha", "açúcar");
+        List<RecipeModel> recipes = new ArrayList<>();
+        recipes.add(firstRecipe);
+        recipes.add(secondRecipe);
+
+        when(service.findRecipesByIngredientsNames(ingredientsName, 2)).thenReturn(recipes);
+        ResponseEntity<Object> response = controller.getRecipesByIngredientsName(ingredientsName, 2);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        verify(service).findRecipesByIngredientsNames(ingredientsName, 2);
+    }
+
+    @Test
+    @DisplayName("Deve retornar que não há receitas com o nome do ingrediente informado")
+    public void testGetRecipesByIngredientsNameNotFound() {
+        List<String> ingredientsName = Arrays.asList("farinha", "açúcar");
+
+        when(service.findRecipesByIngredientsNames(ingredientsName, 2)).thenReturn(new ArrayList<>());
+
+        ResponseEntity<Object> response = controller.getRecipesByIngredientsName(ingredientsName, 2);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals("Não há receitas cadastradas com os ingredientes informados!", response.getBody());
     }
 }

@@ -1,7 +1,7 @@
 package br.com.zup.squad1.controller.request;
 
-import br.com.zup.squad1.dto.RecipeIngredientDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import br.com.zup.squad1.dto.RecipeIngredientRequestDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -31,7 +31,7 @@ public class RecipeDTORequest {
 
     @Valid
     @JsonProperty("ingredientes")
-    private List<@NotNull RecipeIngredientDto> ingredients;
+    private List<@NotNull RecipeIngredientRequestDTO> ingredients;
 }
 
 

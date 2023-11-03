@@ -40,7 +40,11 @@ public class NotificationService {
 
             List<RecipeModel> recipeIngredients = recipeIngredientRepository.findRecipesByIngredientId(ingredient.getId());
 
-            ingredientInfo.put("recipe_ingredient", recipeIngredients);
+            if(recipeIngredients.isEmpty()){
+                ingredientInfo.put("recipe_ingredient", "Não há receitas cadastradas com esse ingrediente");
+            } else {
+                ingredientInfo.put("recipe_ingredient", recipeIngredients);
+            }
 
             result.add(ingredientInfo);
         }
