@@ -12,4 +12,9 @@ public class CustomExceptionHandler {
     public ResponseEntity<String> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
         return ResponseEntity.badRequest().body("Erro de conversão: Verifique se os campos da solicitação estão no formato correto.");
     }
+
+    @ExceptionHandler(IdealWaterAmountUnregisteredException.class)
+    public ResponseEntity<String> handleIdealWaterAmountUnregistered (IdealWaterAmountUnregisteredException ex){
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
 }
