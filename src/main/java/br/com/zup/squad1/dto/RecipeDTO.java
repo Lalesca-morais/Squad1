@@ -1,7 +1,7 @@
 package br.com.zup.squad1.dto;
 
-import lombok.*;
 
+import lombok.*;
 import java.util.List;
 
 @Getter
@@ -11,9 +11,13 @@ import java.util.List;
 @NoArgsConstructor
 public class RecipeDTO {
     private Long id;
+
     private String name;
+
     private String preparation;
+
     private String difficulty;
+
     private List<RecipeIngredientResponseDTO> ingredients;
 }
 
