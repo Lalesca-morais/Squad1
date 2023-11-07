@@ -1,5 +1,6 @@
 package br.com.zup.squad1.controller;
 
+
 import br.com.zup.squad1.exceptions.InvalidDateFormatException;
 import br.com.zup.squad1.model.WaterConsumptionModel;
 import br.com.zup.squad1.service.ValidationService;
@@ -9,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,32 +44,61 @@ class WaterQuantityHistoryControllerTest {
 
     @Test
     void testFindByData() throws InvalidDateFormatException {
-        List<WaterConsumptionModel> expectedList = new ArrayList<>();
-        String date = "2023-11-07";
-        when(waterQuantityHistoryService.findByDate(date)).thenReturn(expectedList);
-        List<WaterConsumptionModel> result = waterQuantityHistoryController.findByData(date);
-        assertEquals(expectedList, result);
+        String validDate = "01/01/2023";
+        List<WaterConsumptionModel> mockData = new ArrayList<>();
+
+        when(validationService.isValidDateFormat(validDate)).thenReturn(false);
+        when(waterQuantityHistoryService.findByDate(validDate)).thenReturn(mockData);
+
+        ResponseEntity<?> response = waterQuantityHistoryController.findByData(validDate);
+
+        if (mockData.isEmpty()) {
+            assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+            assertEquals("Nenhum dado encontrado para a data fornecida.", response.getBody());
+        } else {
+            assertEquals(HttpStatus.OK, response.getStatusCode());
+            assertEquals(mockData, response.getBody());
+        }
     }
 
     @Test
     void testFindLast7Days() throws InvalidDateFormatException {
-        List<WaterConsumptionModel> expectedList = new ArrayList<>();
-        String dateStart = "2023-11-01";
-        String endDate = "2023-11-07";
-        when(waterQuantityHistoryService.findLast7Days(dateStart, endDate)).thenReturn(expectedList);
-        List<WaterConsumptionModel> result = waterQuantityHistoryController.findLast7Days(dateStart, endDate);
-        assertEquals(expectedList, result);
+        String validStartDate = "01/01/2023";
+        String validEndDate = "07/01/2023";
+        List<WaterConsumptionModel> mockData = new ArrayList<>();
+
+        when(validationService.isValidDateFormat(validStartDate)).thenReturn(false);
+        when(validationService.isValidDateFormat(validEndDate)).thenReturn(false);
+        when(waterQuantityHistoryService.findLast7Days(validStartDate, validEndDate)).thenReturn(mockData);
+
+        ResponseEntity<?> response = waterQuantityHistoryController.findLast7Days(validStartDate, validEndDate);
+
+        if (mockData.isEmpty()) {
+            assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+            assertEquals("Nenhum dado encontrado para a data fornecida.", response.getBody());
+        } else {
+            assertEquals(HttpStatus.OK, response.getStatusCode());
+            assertEquals(mockData, response.getBody());
+        }
     }
 
     @Test
     public void testFindByDataWithValidDateFormat() throws InvalidDateFormatException {
-        when(validationService.isValidDateFormat("01/01/2023")).thenReturn(false);
-        List<WaterConsumptionModel> expectedList = new ArrayList();
-        when(waterQuantityHistoryService.findByDate("01/01/2023")).thenReturn(expectedList);
+        String validYearMonth = "01/2023";
+        List<WaterConsumptionModel> mockData = new ArrayList<>();
 
-        List<WaterConsumptionModel> result = waterQuantityHistoryController.findByData("01/01/2023");
+        when(validationService.isValidYearMonthFormat(validYearMonth)).thenReturn(true);
+        when(waterQuantityHistoryService.findByYearMonth(validYearMonth)).thenReturn(mockData);
 
-        assertSame(expectedList, result);
+        ResponseEntity<?> response = waterQuantityHistoryController.findByYearMonth(validYearMonth);
+
+        if (mockData.isEmpty()) {
+            assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+            assertEquals("Nenhum dado encontrado para a data fornecida.", response.getBody());
+        } else {
+            assertEquals(HttpStatus.OK, response.getStatusCode());
+            assertEquals(mockData, response.getBody());
+        }
     }
 
     @Test
