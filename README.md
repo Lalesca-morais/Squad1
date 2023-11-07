@@ -81,7 +81,7 @@ Você pode visualizar a quantidade de água ingerida em cada dia.
 + Java com Spring Boot;
 + Língua inglesa;
 + Banco PostgreSQL;
-+ JDK 11.
++ JDK mínima 17.
 
 **Como usar:**
 
