@@ -3,11 +3,14 @@ package br.com.zup.squad1.exceptions;
 import br.com.zup.squad1.controller.validation.exception.ValidationFieldsException;
 import br.com.zup.squad1.dto.IngredientDTO;
 import jakarta.validation.ConstraintViolation;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,5 +36,17 @@ public class ValidationExceptionHandler {
             errors.add(violation.getMessage());
         }
         return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(InvalidDateFormatException.class)
+    public final ResponseEntity<ErrorResponse> handleInvalidDateFormatException(InvalidDateFormatException ex, WebRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @Data
+    @AllArgsConstructor
+    private static class ErrorResponse {
+        private String message;
     }
 }
