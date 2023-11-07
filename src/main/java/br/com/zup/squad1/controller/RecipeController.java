@@ -1,7 +1,8 @@
 package br.com.zup.squad1.controller;
 
-import br.com.zup.squad1.controller.request.RecipeDTORequest;
+import br.com.zup.squad1.dto.RecipeDTORequest;
 import br.com.zup.squad1.dto.RecipeDTO;
+import br.com.zup.squad1.exceptions.RecipeNotFoundException;
 import br.com.zup.squad1.model.RecipeModel;
 import br.com.zup.squad1.service.RecipeService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -10,13 +11,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Validated
 @RestController
@@ -25,8 +21,6 @@ import java.util.List;
 public class RecipeController {
     @Autowired
     private RecipeService recipeService;
-    RecipeDTO recipeDTO = new RecipeDTO();
-
     @PostMapping
     public ResponseEntity<Object> registerRecipe(@Valid @RequestBody RecipeDTORequest recipeDTO) {
         RecipeModel recipeModel = new RecipeModel();
@@ -44,15 +38,15 @@ public class RecipeController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> consultRecipe(@PathVariable Long id) {
-        RecipeModel recipe = recipeService.consultRecipe(id);
-
-        if (recipe != null) {
+        try {
+            RecipeModel recipe = recipeService.consultRecipe(id);
+            RecipeDTO recipeDTO = new RecipeDTO();
             BeanUtils.copyProperties(recipe, recipeDTO);
             return ResponseEntity.status(HttpStatus.OK).body(recipeDTO);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Receita não encontrada");
-        }
+        } catch (RecipeNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
+}
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteRecipe(@PathVariable Long id) {
@@ -68,15 +62,15 @@ public class RecipeController {
     public ResponseEntity<Object> changeRecipe(@PathVariable Long id, @Valid @RequestBody RecipeModel newRecipe) {
         try {
             RecipeModel recipeChanged = recipeService.changeRecipe(id, newRecipe);
-
-            if (recipeChanged != null) {
-                BeanUtils.copyProperties(recipeChanged, recipeDTO);
-                return ResponseEntity.status(HttpStatus.OK).body(recipeDTO);
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Receita não encontrada");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Requisição inválida");
+            RecipeDTO recipeDTO = new RecipeDTO();
+            BeanUtils.copyProperties(recipeChanged, recipeDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(recipeDTO);
+        } catch (RecipeNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Receita não encontrada");
         }
     }
 }

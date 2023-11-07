@@ -1,4 +1,4 @@
-package br.com.zup.squad1.controller.request;
+package br.com.zup.squad1.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import br.com.zup.squad1.dto.RecipeIngredientRequestDTO;
