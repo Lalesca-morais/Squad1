@@ -27,10 +27,6 @@ public class RecipeDTORequest {
     @NotEmpty
     @JsonProperty("dificuldade")
     private String difficulty;
-
-    @Valid
-    @JsonProperty("ingredientes")
-    private List<@NotNull RecipeIngredientRequestDTO> ingredients;
 }
 
 

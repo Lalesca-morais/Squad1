@@ -20,13 +20,6 @@ public class RecipeModel {
 
     private String name;
 
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "RecipeIngredient",
-            joinColumns = @JoinColumn(name = "id_recipe"),
-            inverseJoinColumns = @JoinColumn(name = "id_ingredient"))
-    private Set<Ingredient> ingredients;
-
     @Column(length = 600)
     private String preparation;
 
