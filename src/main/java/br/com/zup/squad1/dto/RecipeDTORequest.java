@@ -1,7 +1,6 @@
 package br.com.zup.squad1.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import br.com.zup.squad1.dto.RecipeIngredientRequestDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

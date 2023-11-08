@@ -3,7 +3,6 @@ package br.com.zup.squad1.service;
 import br.com.zup.squad1.model.Ingredient;
 import br.com.zup.squad1.repository.IngredientRepository;
 import lombok.Data;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;

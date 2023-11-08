@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import br.com.zup.squad1.dto.ConverterRequestDTO;
 import br.com.zup.squad1.dto.ConverterResponseDTO;
 import br.com.zup.squad1.service.ConverterService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
