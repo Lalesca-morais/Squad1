@@ -59,8 +59,9 @@ public class RecipeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> changeRecipe(@PathVariable Long id, @Valid @RequestBody RecipeModel newRecipe) {
+    public ResponseEntity<Object> changeRecipe(@PathVariable Long id, @Valid @RequestBody RecipeDTORequest recipeDTORequest) {
         try {
+            RecipeModel newRecipe = new RecipeModel(recipeDTORequest.getId(), recipeDTORequest.getName(), recipeDTORequest.getPreparation(), recipeDTORequest.getDifficulty());
             RecipeModel recipeChanged = recipeService.changeRecipe(id, newRecipe);
             RecipeDTO recipeDTO = new RecipeDTO();
             BeanUtils.copyProperties(recipeChanged, recipeDTO);

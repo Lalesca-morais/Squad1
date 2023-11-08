@@ -16,7 +16,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -36,7 +35,6 @@ public class RecipeControllerTest {
         recipeDTORequest.setName("Test Recipe");
         recipeDTORequest.setPreparation("Test Preparation");
         recipeDTORequest.setDifficulty("Medium");
-        recipeDTORequest.setIngredients(new ArrayList<>());
 
         RecipeModel recipeModel = new RecipeModel();
         BeanUtils.copyProperties(recipeDTORequest, recipeModel);
@@ -91,10 +89,12 @@ public class RecipeControllerTest {
     @Test
     public void testChangeRecipe() {
         Long recipeId = 1L;
-        RecipeModel newRecipeModel = new RecipeModel();
-        newRecipeModel.setName("Changed Recipe");
-        newRecipeModel.setPreparation("Changed Preparation");
-        newRecipeModel.setDifficulty("Medium");
+        RecipeDTORequest request = new RecipeDTORequest();
+        request.setName("Changed Recipe");
+        request.setPreparation("Changed Preparation");
+        request.setDifficulty("Medium");
+
+        RecipeModel newRecipe = new RecipeModel(request.getId(), request.getName(), request.getPreparation(), request.getDifficulty());
 
         RecipeModel recipeChanged = new RecipeModel();
         recipeChanged.setId(recipeId);
@@ -102,8 +102,8 @@ public class RecipeControllerTest {
         recipeChanged.setPreparation("Test Preparation");
         recipeChanged.setDifficulty("Easy");
 
-        Mockito.when(recipeService.changeRecipe(recipeId, newRecipeModel)).thenReturn(recipeChanged);
-        ResponseEntity<Object> response = recipeController.changeRecipe(recipeId, newRecipeModel);
+        Mockito.when(recipeService.changeRecipe(recipeId, newRecipe)).thenReturn(recipeChanged);
+        ResponseEntity<Object> response = recipeController.changeRecipe(recipeId, request);
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
         RecipeDTO responseDTO = (RecipeDTO) response.getBody();
@@ -116,9 +116,10 @@ public class RecipeControllerTest {
     public void testChangeRecipeNotFound() {
         Long recipeId = 1L;
         RecipeModel newRecipeModel = new RecipeModel();
+        RecipeDTORequest request = new RecipeDTORequest();
 
         Mockito.when(recipeService.changeRecipe(recipeId, newRecipeModel)).thenThrow(new RecipeNotFoundException("Receita não encontrada"));
-        ResponseEntity<Object> response = recipeController.changeRecipe(recipeId, newRecipeModel);
+        ResponseEntity<Object> response = recipeController.changeRecipe(recipeId, request);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 }
