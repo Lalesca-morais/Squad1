@@ -55,11 +55,6 @@ public class IngredientServiceTest {
 
         verify(ingredientRepository, times(1)).findAll();
 
-        System.out.println("Ingredientes cadastrados");
-        for (Ingredient ingredient : result) {
-            System.out.println("id: " + ingredient.getId() + "\nnome: " + ingredient.getName());
-        }
-
         assertEquals(ingredients, result);
     }
 
@@ -91,25 +86,26 @@ public class IngredientServiceTest {
     public void testUpdateIngredient() {
         Long id = 1L;
         Ingredient existingIngredient = new Ingredient(id, "banana");
-
-
         Ingredient updateIngredient = new Ingredient(id, "abacaxi");
 
-        when(ingredientRepository.findById(id)).thenReturn(Optional.of(existingIngredient));
+        Mockito.when(ingredientRepository.findById(id)).thenReturn(Optional.of(existingIngredient));
 
-        when(ingredientRepository.save(existingIngredient)).thenReturn(updateIngredient);
+        Mockito.when(ingredientRepository.save(Mockito.any(Ingredient.class))).thenAnswer(invocation -> {
+            Ingredient updatedIngredient = invocation.getArgument(0);
+            return updatedIngredient;
+        });
 
         try {
             Ingredient result = ingredientService.updateIngredient(id, updateIngredient);
-            assertEquals(updateIngredient, result);
-            assertEquals("abacaxi", result.getName());
+            assertEquals(updateIngredient.getName(), result.getName());
+            assertEquals(updateIngredient.getValidity(), result.getValidity());
+            assertEquals(updateIngredient.getAmount(), result.getAmount());
         } catch (IngredientNotFound e) {
             fail("Ingrediente não encontrado pelo id: " + id);
         }
 
         verify(ingredientRepository, times(1)).findById(id);
-
-        verify(ingredientRepository, times(1)).save(existingIngredient);
+        verify(ingredientRepository, times(1)).save(Mockito.any(Ingredient.class));
     }
 
     @Test
@@ -132,10 +128,13 @@ public class IngredientServiceTest {
     public void deleteIngredientById() throws IngredientNotFound {
         Long id = 1L;
 
-        doNothing().when(ingredientRepository).deleteById(id);
+        Ingredient ingredient = new Ingredient();
+        ingredient.setId(id);
+        Mockito.when(ingredientRepository.findById(id)).thenReturn(Optional.of(ingredient));
 
         ingredientService.deleteIngredient(id);
-        verify(ingredientRepository, times(1)).deleteById(id);
 
+        Mockito.verify(ingredientRepository, Mockito.times(1)).deleteById(id);
     }
 }
+
