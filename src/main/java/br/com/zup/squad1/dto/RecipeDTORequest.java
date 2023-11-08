@@ -1,12 +1,8 @@
 package br.com.zup.squad1.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import br.com.zup.squad1.dto.RecipeIngredientRequestDTO;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import java.util.List;
 
 @Getter
 @Setter
@@ -28,10 +24,6 @@ public class RecipeDTORequest {
     @NotEmpty
     @JsonProperty("dificuldade")
     private String difficulty;
-
-    @Valid
-    @JsonProperty("ingredientes")
-    private List<@NotNull RecipeIngredientRequestDTO> ingredients;
 }
 
 

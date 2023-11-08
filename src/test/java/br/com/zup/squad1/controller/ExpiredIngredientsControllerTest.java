@@ -29,8 +29,8 @@ public class ExpiredIngredientsControllerTest {
     @Test
     public void testListExpiredIngredients() {
         List<Ingredient> mockIngredients = Arrays.asList(
-                new Ingredient(1L, "Banana", LocalDate.of(2023, 1, 10), 10, ProductType.FRUIT, State.GREEN, null),
-                new Ingredient(2L, "Mel", LocalDate.of(2023, 2, 10), 20, ProductType.NON_PERISHABLE, null, null));
+                new Ingredient(1L, "Banana", LocalDate.of(2023, 1, 10), 10, ProductType.FRUIT, State.GREEN),
+                new Ingredient(2L, "Mel", LocalDate.of(2023, 2, 10), 20, ProductType.NON_PERISHABLE, null));
 
         when(expiredIngredientsService.listExpiredIngredients(currentDate)).thenReturn(mockIngredients);
         List<IngredientDTO> result = expiredIngredientsController.listExpiredIngredients(null);
@@ -52,7 +52,7 @@ public class ExpiredIngredientsControllerTest {
     @Test
     @DisplayName("Teste para quando a lista de ingredientes expirados contém um único ingrediente")
     public void testListExpiredIngredients3() {
-        List<Ingredient> mockIngredients = List.of(new Ingredient(1L, "Morango", LocalDate.of(2023, 1, 10), 10, ProductType.FRUIT, State.GREEN, null));
+        List<Ingredient> mockIngredients = List.of(new Ingredient(1L, "Morango", LocalDate.of(2023, 1, 10), 10, ProductType.FRUIT, State.GREEN));
 
         when(expiredIngredientsService.listExpiredIngredients(currentDate)).thenReturn(mockIngredients);
         List<IngredientDTO> result = expiredIngredientsController.listExpiredIngredients(null);
@@ -65,10 +65,10 @@ public class ExpiredIngredientsControllerTest {
     @DisplayName("Teste para quando a lista de ingredientes está com vários ingredientes")
     public void testListExpiredIngredients4() {
         List<Ingredient> mockIngredients = Arrays.asList(
-                new Ingredient(1L, "Uva", LocalDate.of(2023, 1, 10), 10, ProductType.FRUIT, State.MATURE, null),
-                new Ingredient(2L, "Bolo", LocalDate.of(2023, 2, 15), 20, ProductType.BAKERY, null, null),
-                new Ingredient(3L, "Café em grãos", LocalDate.of(2023, 4, 7), 20, ProductType.NON_PERISHABLE, null, null),
-                new Ingredient(4L, "Croissant", LocalDate.of(2023, 3, 8), 20, ProductType.BAKERY, null, null));
+                new Ingredient(1L, "Uva", LocalDate.of(2023, 1, 10), 10, ProductType.FRUIT, State.MATURE),
+                new Ingredient(2L, "Bolo", LocalDate.of(2023, 2, 15), 20, ProductType.BAKERY, null),
+                new Ingredient(3L, "Café em grãos", LocalDate.of(2023, 4, 7), 20, ProductType.NON_PERISHABLE, null),
+                new Ingredient(4L, "Croissant", LocalDate.of(2023, 3, 8), 20, ProductType.BAKERY, null));
 
         when(expiredIngredientsService.listExpiredIngredients(currentDate)).thenReturn(mockIngredients);
         List<IngredientDTO> result = expiredIngredientsController.listExpiredIngredients(null);

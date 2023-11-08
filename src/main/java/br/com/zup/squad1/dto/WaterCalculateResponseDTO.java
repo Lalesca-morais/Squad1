@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class WaterCalculateResponseDTO {
 
-    @JsonProperty(value = "quantidade de água ideal")
+    @JsonProperty(value = "quantidade_ideal")
     private String idealAmountOfWater;
 }
