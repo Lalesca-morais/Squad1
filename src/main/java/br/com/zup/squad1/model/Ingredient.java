@@ -2,7 +2,6 @@ package br.com.zup.squad1.model;
 
 import br.com.zup.squad1.model.enums.ProductType;
 import br.com.zup.squad1.model.enums.State;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,8 +10,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "ingredients")
