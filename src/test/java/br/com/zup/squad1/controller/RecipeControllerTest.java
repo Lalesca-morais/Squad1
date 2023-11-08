@@ -1,8 +1,9 @@
 package br.com.zup.squad1.controller;
 
 
-import br.com.zup.squad1.controller.request.RecipeDTORequest;
+import br.com.zup.squad1.dto.RecipeDTORequest;
 import br.com.zup.squad1.dto.RecipeDTO;
+import br.com.zup.squad1.exceptions.RecipeNotFoundException;
 import br.com.zup.squad1.model.RecipeModel;
 import br.com.zup.squad1.service.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
@@ -73,7 +74,7 @@ public class RecipeControllerTest {
     public void testConsultRecipeNotFound() {
         Long recipeId = 1L;
 
-        Mockito.when(recipeService.consultRecipe(recipeId)).thenReturn(null);
+        Mockito.when(recipeService.consultRecipe(recipeId)).thenThrow(new RecipeNotFoundException("Receita não encontrada para o ID: " + recipeId));
         ResponseEntity<Object> response = recipeController.consultRecipe(recipeId);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
@@ -115,9 +116,9 @@ public class RecipeControllerTest {
     public void testChangeRecipeNotFound() {
         Long recipeId = 1L;
         RecipeModel newRecipeModel = new RecipeModel();
-        Mockito.when(recipeService.changeRecipe(recipeId, newRecipeModel)).thenReturn(null);
-        ResponseEntity<Object> response = recipeController.changeRecipe(recipeId, newRecipeModel);
 
+        Mockito.when(recipeService.changeRecipe(recipeId, newRecipeModel)).thenThrow(new RecipeNotFoundException("Receita não encontrada"));
+        ResponseEntity<Object> response = recipeController.changeRecipe(recipeId, newRecipeModel);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 }

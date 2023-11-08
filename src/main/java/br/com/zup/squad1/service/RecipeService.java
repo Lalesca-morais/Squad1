@@ -48,7 +48,6 @@ public class RecipeService {
         if (recipeRepository.existsById(id)) {
             if (!id.equals(newRecipe.getId())) {
                 throw new IllegalArgumentException("ID na URL não corresponde ao ID na receita.");}
-
             System.out.println("Receita atualizada com sucesso!");
             return recipeRepository.save(newRecipe);
         } else {
