@@ -3,6 +3,7 @@ package br.com.zup.squad1.model;
 import br.com.zup.squad1.model.enums.ProductType;
 import br.com.zup.squad1.model.enums.State;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,29 +26,30 @@ public class Ingredient {
     private Long id;
 
     @Column(name = "name")
+    @JsonProperty("nome")
     private String name;
 
     @Column(name = "validity")
+    @JsonProperty("validade")
     private LocalDate validity;
 
     @Column(name = "amount")
+    @JsonProperty("quantidade")
     private double amount;
 
     @Column(name = "productType")
+    @JsonProperty("tipo do produto")
     @Enumerated(EnumType.STRING)
     private ProductType productType;
 
     @Column(name = "state")
+    @JsonProperty("estado")
     @Enumerated(EnumType.STRING)
     private State state;
 
     public Ingredient(Long id, String name) {
 
     }
-
-    @JsonIgnore
-    @ManyToMany(mappedBy = "ingredients")
-    private Set<RecipeModel> recipes = new HashSet<>();
 
 }
 

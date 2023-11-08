@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WaterConsumptionRequestDTO {
-    @JsonProperty(value = "quantidade_ingerida")
+    @JsonProperty(value = "quantidade ingerida")
     @Positive(message = "A quantidade deve ser maior que zero")
     private double quantity_ingested;
 }

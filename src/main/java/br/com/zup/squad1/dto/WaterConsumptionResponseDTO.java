@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WaterConsumptionResponseDTO {
-    @JsonProperty(value = "meta_diaria")
+    @JsonProperty(value = "meta")
     private String daily_goal;
 }

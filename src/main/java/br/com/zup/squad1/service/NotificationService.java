@@ -34,16 +34,16 @@ public class NotificationService {
 
             Map<String, Object> ingredientInfo = new HashMap<>();
 
-            ingredientInfo.put("id", ingredient.getId());
-            ingredientInfo.put("name", ingredient.getName());
-            ingredientInfo.put("validity", ingredient.getValidity());
+            ingredientInfo.put("id do ingrediente", ingredient.getId());
+            ingredientInfo.put("nome do ingrediente", ingredient.getName());
+            ingredientInfo.put("data de validade", ingredient.getValidity());
 
             List<RecipeModel> recipeIngredients = recipeIngredientRepository.findRecipesByIngredientId(ingredient.getId());
 
             if(recipeIngredients.isEmpty()){
-                ingredientInfo.put("recipe_ingredient", "Não há receitas cadastradas com esse ingrediente");
+                ingredientInfo.put("receitas", "Não há receitas cadastradas com esse ingrediente");
             } else {
-                ingredientInfo.put("recipe_ingredient", recipeIngredients);
+                ingredientInfo.put("receitas", recipeIngredients);
             }
 
             result.add(ingredientInfo);
