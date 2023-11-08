@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RecipeIngredientResponseDTO {
-    @JsonProperty("id do ingrediente")
+    @JsonProperty("id_ingrediente")
     private Long ingredientId;
 
     @JsonProperty("nome")

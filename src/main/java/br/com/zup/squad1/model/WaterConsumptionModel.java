@@ -20,10 +20,10 @@ public class WaterConsumptionModel {
     private String date;
 
     @Column(nullable = false)
-    @JsonProperty("quantidade ingerida")
+    @JsonProperty("quantidade_ingerida")
     private double quantity_ingested;
 
     @Column(nullable = false)
-    @JsonProperty("quantidade ideal")
+    @JsonProperty("quantidade_ideal")
     private double ideal_amount;
 }

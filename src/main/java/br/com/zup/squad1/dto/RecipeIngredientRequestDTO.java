@@ -12,14 +12,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RecipeIngredientRequestDTO {
     @NotNull
-    @JsonProperty("id da receita")
+    @JsonProperty("id_receita")
     private Long idRecipe;
 
     @NotNull
-    @JsonProperty("id do ingrediente")
+    @JsonProperty("id_ingrediente")
     private Long idIngredient;
 
     @NotNull
-    @JsonProperty("quantidade do ingrediente")
+    @JsonProperty("quantidade_ingrediente")
     private String ingredientQuantity;
 }

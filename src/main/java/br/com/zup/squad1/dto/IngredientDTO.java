@@ -36,7 +36,7 @@ public class IngredientDTO {
     @Positive
     private Double amount;
 
-    @JsonProperty("tipo do produto")
+    @JsonProperty("tipo_produto")
     private ProductType productType;
 
     @JsonProperty(value = "estado")

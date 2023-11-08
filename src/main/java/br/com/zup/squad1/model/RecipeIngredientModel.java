@@ -17,14 +17,14 @@ public class RecipeIngredientModel {
     private Long id;
 
     @Column(nullable = false)
-    @JsonProperty("id da receita")
+    @JsonProperty("id_receita")
     private Long id_recipe;
 
     @Column(nullable = false)
-    @JsonProperty("id do ingrediente")
+    @JsonProperty("id_ingrediente")
     private Long id_ingredient;
 
     @Column(nullable = false)
-    @JsonProperty("quantidade do ingrediente")
+    @JsonProperty("quantidade_ingrediente")
     private String ingredientQuantity;
 }

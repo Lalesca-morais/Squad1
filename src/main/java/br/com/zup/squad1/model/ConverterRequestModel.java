@@ -21,7 +21,7 @@ public class ConverterRequestModel {
     @Max(value = 4, message = "Medida inválida, digite uma medida que esteja entre 1 e 4")
     private int measure;
 
-    @JsonProperty(value = "tipo convertido")
+    @JsonProperty(value = "tipo_convertido")
     @Min(value = 1, message = "Tipo a ser convertido inválido, digite um tipo que esteja entre 1 e 3")
     @Max(value = 3, message = "Tipo a ser convertido inválido, digite um tipo que esteja entre 1 e 3")
     private int type_to_be_converted;

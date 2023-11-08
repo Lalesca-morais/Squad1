@@ -35,7 +35,7 @@ public class Ingredient {
     private double amount;
 
     @Column(name = "productType")
-    @JsonProperty("tipo do produto")
+    @JsonProperty("tipo_produto")
     @Enumerated(EnumType.STRING)
     private ProductType productType;
 
