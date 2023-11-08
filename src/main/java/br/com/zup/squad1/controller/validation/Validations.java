@@ -25,6 +25,7 @@ public class Validations {
 
     private void validationProductType() throws ValidationFieldsException {
         try{
+            if (ingredientDTO.getProductType() == null) return;
             ProductType.valueOf(ingredientDTO.getProductType().name());
         }catch (Exception e){
             throw new ValidationFieldsException("Valor inválido para tipo do produto");
