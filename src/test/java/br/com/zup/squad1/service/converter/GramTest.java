@@ -1,5 +1,6 @@
 package br.com.zup.squad1.service.converter;
 
+import br.com.zup.squad1.exceptions.BadRequestException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,7 @@ public class GramTest {
 
     @Test
     @DisplayName("Testa se o 'converter' lança execeção")
-    void t4() throws IllegalArgumentException{
-        assertThrows(IllegalArgumentException.class, () -> gram.converter(10,5));
+    void t4() throws BadRequestException {
+        assertThrows(BadRequestException.class, () -> gram.converter(10,5));
     }
 }
